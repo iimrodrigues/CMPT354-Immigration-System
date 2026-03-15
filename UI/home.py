@@ -5,7 +5,7 @@ import os
 
 root = tk.Tk()
 root.title("Immigration System")
-root.geometry("400x300")
+root.geometry("1080x720")
 
 # read the SQL schemas from schemas.sql
 def load_schema(file):
