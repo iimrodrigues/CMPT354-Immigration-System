@@ -56,7 +56,7 @@ CREATE TABLE Visa (
     PassportID CHAR(8),
     VisaID CHAR(8),
     IssueDate DATE,
-    ExpiryDate DATA,
+    ExpiryDate DATE,
     StayStatus VARCHAR(25), 
     ApplicationID INT,
     PRIMARY KEY(PassportID, VisaID),
@@ -81,18 +81,18 @@ CREATE TABLE Permit (
     StartDate DATE,
     ExpiryDate DATE,
     ApplicationID INT,
-    PRIMARY KEY(PassportID, VisaID),
+    PRIMARY KEY(PassportID, PermitID),
     FOREIGN KEY(PassportID) REFERENCES NonCitizen(PassportID),
     FOREIGN KEY(ApplicationID) REFERENCES Application(ApplicationID));
 
 CREATE TABLE StudyPermit (
     PassportID CHAR(8),
-    VisaID CHAR(8),
-    PRIMARY KEY(PassportID, VisaID),
+    PermitID CHAR(8),
+    PRIMARY KEY(PassportID, PermitID),
     FOREIGN KEY(PassportID) REFERENCES Permit(PassportID));
 
 CREATE TABLE WorkPermit (
     PassportID CHAR(8),
-    VisaID CHAR(8),
-    PRIMARY KEY(PassportID, VisaID),
+    PermitID CHAR(8),
+    PRIMARY KEY(PassportID, PermitID),
     FOREIGN KEY(PassportID) REFERENCES Permit(PassportID));
