@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Visa Query</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Visa Query</h2>
+
+        <form method="POST">
+
+            <!-- MAIN QUERY ROW -->
+            <div class="row">
+
+                <select name="action">
+                    <option>Find</option>
+                    <option>Count</option>
+                    <option>Max</option>
+                    <option>Min</option>
+                </select>
+
+                <div style="display:flex; align-items:center; padding:0 10px;">
+                    <strong>Visa</strong>
+                </div>
+
+                <select id="fieldSelect" name="field" onchange="updateVisaUI()">
+                    <option value="none">N/A</option>
+                    <option value="expiry">Expiry Date</option>
+                    <option value="issue">Issue Date</option>
+                    <option value="type">Type</option>
+                    <option value="id">ID</option>
+                </select>
+
+            </div>
+
+            <!-- DATE FILTER -->
+            <div id="dateSection" class="hidden section">
+                <select name="dateCondition">
+                    <option>Before</option>
+                    <option>On</option>
+                    <option>After</option>
+                </select>
+
+                <input type="date" name="dateValue">
+            </div>
+
+            <!-- TYPE FILTER -->
+            <div id="typeSection" class="hidden section">
+                <select name="visaType">
+                    <option>All</option>
+                    <option>Transit Visa</option>
+                    <option>Visitor Visa</option>
+                </select>
+            </div>
+
+            <!-- ID INPUT -->
+            <div id="idSection" class="hidden section">
+                <input type="text" id="visaID" name="visaID" placeholder="Enter 8-character ID" maxlength="8">
+            </div>
+
+            <button type="submit">Search</button>
+
+        </form>
+
+    </div>
+
+    <script>
+        function updateVisaUI() {
+            const field = document.getElementById("fieldSelect").value;
+
+            document.getElementById("dateSection").classList.add("hidden");
+            document.getElementById("typeSection").classList.add("hidden");
+            document.getElementById("idSection").classList.add("hidden");
+
+            if (field === "expiry" || field === "issue") {
+                document.getElementById("dateSection").classList.remove("hidden");
+            }
+
+            if (field === "type") {
+                document.getElementById("typeSection").classList.remove("hidden");
+            }
+
+            if (field === "id") {
+                document.getElementById("idSection").classList.remove("hidden");
+            }
+        }
+    </script>
+
+</body>
+
+</html>

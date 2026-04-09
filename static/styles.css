@@ -34,7 +34,7 @@ label {
     margin-bottom: 5px;
 }
 
-select {
+select, input {
     width: 220px;
     height: 40px;
     font-size: 14px;
@@ -47,7 +47,14 @@ button {
     cursor: pointer;
 }
 
-/* responsive */
+.hidden {
+    display: none;
+}
+
+.section {
+    margin-bottom: 20px;
+}
+
 @media (max-width: 600px) {
     .row {
         flex-direction: column;
