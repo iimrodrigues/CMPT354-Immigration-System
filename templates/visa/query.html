@@ -17,7 +17,7 @@
             <!-- MAIN QUERY ROW -->
             <div class="row">
 
-                <select name="action">
+                <select id="actionSelect" name="action" onchange="onActionChange()">
                     <option>Find</option>
                     <option>Count</option>
                     <option>Max</option>
@@ -87,6 +87,51 @@
 
             if (field === "id") {
                 document.getElementById("idSection").classList.remove("hidden");
+            }
+        }
+
+        function resetAllConditional() {
+            // hide all sections
+            document.getElementById("dateSection").classList.add("hidden");
+            document.getElementById("typeSection").classList.add("hidden");
+            document.getElementById("idSection").classList.add("hidden");
+
+            // reset inputs inside them
+            document.querySelectorAll("#dateSection input, #dateSection select")
+                .forEach(el => el.value = "");
+
+            document.querySelectorAll("#typeSection select")
+                .forEach(el => el.selectedIndex = 0);
+
+            document.querySelectorAll("#idSection input")
+                .forEach(el => el.value = "");
+        }
+
+        function onActionChange() {
+            const action = document.getElementById("actionSelect").value;
+            const field = document.getElementById("fieldSelect");
+
+            resetAllConditional();
+            field.value = "none";
+
+            for (let option of field.options) {
+                option.hidden = false;
+            }
+
+            applyRules(action);
+        }
+
+        function applyRules(action) {
+            const field = document.getElementById("fieldSelect");
+
+            const isAggregate = (action === "Max" || action === "Min");
+
+            if (isAggregate) {
+                for (let option of field.options) {
+                    if (option.value === "type" || option.value === "id" || option.value === "none") {
+                        option.hidden = true;
+                    }
+                }
             }
         }
     </script>
