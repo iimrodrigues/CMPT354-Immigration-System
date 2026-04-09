@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Immigration System</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 100px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            padding: 20px;
+            border: 1px solid #ccc;
+            width: 200px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<h2 style="text-align:center;">Immigration Database System</h2>
+
+<div class="container">
+    <div class="card"><a href="/noncitizen">Non-Citizen</a></div>
+    <div class="card"><a href="/visa">Visa</a></div>
+    <div class="card"><a href="/border">Border Crossing</a></div>
+    <div class="card"><a href="/application">Application</a></div>
+</div>
+
+</body>
+</html>

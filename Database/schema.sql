@@ -1,6 +1,5 @@
-DROP DATABASE testdb; -- Only for testing to avoid database already exists error
-CREATE DATABASE testdb;
-USE testdb;
+CREATE DATABASE immigration_db;
+USE immigration_db;
 
 CREATE TABLE NonCitizen (
 	PassportID CHAR(8),
