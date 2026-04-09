@@ -16,6 +16,8 @@ def select():
 
     if entity == "Visa" and action == "Query":
         return redirect(url_for("visa_query"))
+    elif entity == "Permit" and action == "Query":
+        return redirect(url_for("permit_query"))
 
     return f"You selected {entity} + {action}"
 
@@ -23,6 +25,11 @@ def select():
 @app.route("/visa/query", methods=["GET", "POST"])
 def visa_query():
     return render_template("visa/query.html")
+
+## PERMIT ACTIONS
+@app.route("/permit/query", methods=["GET", "POST"])
+def permit_query():
+    return render_template("permit/query.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
