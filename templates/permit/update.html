@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Permit Update</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Permit Update</h2>
+
+        <form method="POST">
+
+            <div class="row">
+
+                <div style="display:flex; align-items:center; padding:0 10px;">
+                    <strong>Update Permit</strong>
+                </div>
+
+                <!-- Field to update -->
+                <div>
+                    <select name="field" id="fieldSelect" onchange="onFieldChange()">
+                        <option value="none">Select Field</option>
+                        <option value="StartDate">Start Date</option>
+                        <option value="ExpiryDate">Expiry Date</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <!-- WHERE: identify which permit -->
+            <div class="row">
+
+                <div style="display:flex; align-items:center; padding:0 10px;">
+                    <strong>Where:</strong>
+                </div>
+
+                <div>
+                    <label>Passport ID:</label>
+                    <input type="text" name="passportID" placeholder="e.g. AB123456">
+                </div>
+
+                <div>
+                    <label>Permit ID:</label>
+                    <input type="text" name="permitID" placeholder="e.g. PA12345678">
+                </div>
+
+            </div>
+
+            <!-- Update To -->
+            <div class="row">
+
+                <div style="display:flex; align-items:center; padding:0 10px;">
+                    <strong>Update To:</strong>
+                </div>
+
+                <div id="dateUpdateSection" class="hidden section">
+                    <input type="date" name="dateUpdateValue">
+                </div>
+
+            </div>
+
+            <button type="submit">Update</button>
+
+        </form>
+
+        {% if message %}
+        <div class="row">
+            <p><strong>{{ message }}</strong></p>
+        </div>
+        {% endif %}
+
+        {% if results %}
+        <div class="row">
+            <table>
+                <tr>
+                    {% for col in results[0].keys() %}
+                    <th>{{ col }}</th>
+                    {% endfor %}
+                </tr>
+                {% for row in results %}
+                <tr>
+                    {% for val in row.values() %}
+                    <td>{{ val }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% endif %}
+
+    </div>
+
+    <script>
+        function onFieldChange() {
+            const field = document.getElementById("fieldSelect").value;
+
+            // Hide all update sections
+            document.getElementById("dateUpdateSection").classList.add("hidden");
+
+            if (field === "StartDate" || field === "ExpiryDate") {
+                document.getElementById("dateUpdateSection").classList.remove("hidden");
+            }
+        }
+    </script>
+
+</body>
+
+</html>
