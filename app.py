@@ -20,6 +20,8 @@ def select():
         return redirect(url_for("permit_query"))
     elif entity == "Application" and action == "Query":
         return redirect(url_for("application_query"))
+    elif entity == "Border Crossing" and action == "Query":
+        return redirect(url_for("bordercrossing_query"))
 
     return f"You selected {entity} + {action}"
 
@@ -37,6 +39,11 @@ def permit_query():
 @app.route("/application/query", methods=["GET", "POST"])
 def application_query():
     return render_template("application/query.html")
+
+## BORDER CROSSING ACTIONS
+@app.route("/bordercrossing/query", methods=["GET", "POST"])
+def bordercrossing_query():
+    return render_template("bordercrossing/query.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
