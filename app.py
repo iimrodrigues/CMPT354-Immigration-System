@@ -82,20 +82,6 @@ def visa_remove():
     return render_template("visa/remove.html", results=None)
 
 ## PERMIT ACTIONS
-@app.route("/permit/query", methods=["GET", "POST"])
-def permit_query():
-    if request.method == "POST":
-        (sql, params) = permit.get_permit_query(request.form)
-        
-        conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
-
-        cursor.execute(sql, params)
-        results = cursor.fetchall()
-        return render_template("permit/query.html", results=results)
-    
-    return render_template("permit/query.html", results=None)
-
 @app.route("/permit/remove", methods=["GET", "POST"])
 def permit_remove():
     if request.method == "POST":
@@ -112,32 +98,38 @@ def permit_remove():
 
 @app.route('/permit/update', methods=['GET', 'POST'])
 def permit_update():
-    message = None
-    results = None
-
     if request.method == 'POST':
-        query, error = get_permit_update_query(request.form)
+        (sql, params, error) = permit.permit_update_query(request.form)
 
         if error:
-            message = error
-        else:
-            conn = get_connection()
-            cursor = conn.cursor(dictionary=True)
-
-            cursor.execute(sql, params)
-            results = cursor.fetchall()
-
-            # Show the updated record
-            passport_id = request.form.get("passportID")
-            permit_id = request.form.get("permitID")
-            cursor.execute(
-                "SELECT * FROM Permit WHERE PassportID = %s AND PermitID = %s",
-                (passport_id, permit_id)
+            return render_template(
+                'permit/update.html',
+                message=error,
+                results=None
             )
-            results = cursor.fetchall()
-            message = "Permit updated successfully."
 
-    return render_template('permit/update.html', message=message, results=results)
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql, params)
+        conn.commit()
+
+        passport_id = request.form.get("passportID")
+        permit_id = request.form.get("permitID")
+
+        cursor.execute(
+            "SELECT * FROM Permit WHERE PassportID = %s AND PermitID = %s",
+            (passport_id, permit_id)
+        )
+        results = cursor.fetchall()
+
+        return render_template(
+            'permit/update.html',
+            message="Permit updated successfully.",
+            results=results
+        )
+
+    return render_template('permit/update.html', results=None)
 
 ## APPLICATION ACTIONS
 @app.route("/application/query", methods=["GET", "POST"])
