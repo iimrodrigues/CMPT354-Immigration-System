@@ -13,41 +13,41 @@ def get_permit_query(form):
         selection = "COUNT(*)"
     elif action == "Max":
         if field == "issue":
-            return f"SELECT * FROM Permit WHERE IssueDate = (SELECT MAX(IssueDate) FROM Permit);"
+            return f"SELECT * FROM Permit WHERE IssueDate = (SELECT MAX(IssueDate) FROM Permit);", ()
         elif field == "expiry":
-            return f"SELECT * FROM Permit WHERE ExpiryDate = (SELECT MAX(ExpiryDate) FROM Permit);"
+            return f"SELECT * FROM Permit WHERE ExpiryDate = (SELECT MAX(ExpiryDate) FROM Permit);", ()
         else:
             selection = "*"
     elif action == "Min":
         if field == "issue":
-            return f"SELECT * FROM Permit WHERE IssueDate = (SELECT MIN(IssueDate) FROM Permit);"
+            return f"SELECT * FROM Permit WHERE IssueDate = (SELECT MIN(IssueDate) FROM Permit);", ()
         elif field == "expiry":
-            return f"SELECT * FROM Permit WHERE ExpiryDate = (SELECT MIN(ExpiryDate) FROM Permit);"
+            return f"SELECT * FROM Permit WHERE ExpiryDate = (SELECT MIN(ExpiryDate) FROM Permit);", ()
         else:
             selection = "*"
 
     if field == "none":
-        return f"SELECT {selection} FROM Permit;"
+        return f"SELECT {selection} FROM Permit;", ()
     elif field == "type":
         if type == "All":
-            return f"SELECT {selection} FROM Permit;"
+            return f"SELECT {selection} FROM Permit;", ()
         elif type == "Work Permit":
-            return f"SELECT {selection} FROM Permit JOIN WorkPermit ON Permit.PermitID = WorkPermit.PermitID;"
+            return f"SELECT {selection} FROM Permit JOIN WorkPermit ON Permit.PermitID = WorkPermit.PermitID;", ()
         elif type == "Study Permit":
-            return f"SELECT {selection} FROM Permit JOIN StudyPermit ON Permit.PermitID = StudyPermit.PermitID;"
+            return f"SELECT {selection} FROM Permit JOIN StudyPermit ON Permit.PermitID = StudyPermit.PermitID;", ()
     elif field == "issue":
         if dateCondition == "Before":
-            return f"SELECT {selection} FROM Permit WHERE Permit.IssueDate < '{date}';"
+            return f"SELECT {selection} FROM Permit WHERE Permit.IssueDate < %s;", (date,)
         elif dateCondition == "On":
-            return f"SELECT {selection} FROM Permit WHERE Permit.IssueDate = '{date}';"
+            return f"SELECT {selection} FROM Permit WHERE Permit.IssueDate = %s;", (date,)
         elif dateCondition == "After":
-            return f"SELECT {selection} FROM Permit WHERE Permit.IssueDate > '{date}';"
+            return f"SELECT {selection} FROM Permit WHERE Permit.IssueDate > %s;", (date,)
     elif field == "expiry":
         if dateCondition == "Before":
-            return f"SELECT {selection} FROM Permit WHERE Permit.ExpiryDate < '{date}';"
+            return f"SELECT {selection} FROM Permit WHERE Permit.ExpiryDate < %s;", (date,)
         elif dateCondition == "On":
-            return f"SELECT {selection} FROM Permit WHERE Permit.ExpiryDate = '{date}';"
+            return f"SELECT {selection} FROM Permit WHERE Permit.ExpiryDate = %s;", (date,)
         elif dateCondition == "After":
-            return f"SELECT {selection} FROM Permit WHERE Permit.ExpiryDate > '{date}';"
+            return f"SELECT {selection} FROM Permit WHERE Permit.ExpiryDate > %s;", (date,)
     elif field == "id":
-        return f"SELECT {selection} FROM Permit WHERE Permit.PermitID = '{id}';"
+        return f"SELECT {selection} FROM Permit WHERE Permit.PermitID = %s;", (id,)

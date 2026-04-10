@@ -32,12 +32,12 @@ def select():
 @app.route("/visa/query", methods=["GET", "POST"])
 def visa_query():
     if request.method == "POST":
-        sql = visa.get_visa_query(request.form)
+        (sql, params) = visa.get_visa_query(request.form)
         
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
 
-        cursor.execute(sql)
+        cursor.execute(sql, params)
         results = cursor.fetchall()
         return render_template("visa/query.html", results=results)
         
@@ -47,12 +47,12 @@ def visa_query():
 @app.route("/permit/query", methods=["GET", "POST"])
 def permit_query():
     if request.method == "POST":
-        sql = permit.get_permit_query(request.form)
+        (sql, params) = permit.get_permit_query(request.form)
         
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
 
-        cursor.execute(sql)
+        cursor.execute(sql, params)
         results = cursor.fetchall()
         return render_template("permit/query.html", results=results)
     
