@@ -77,7 +77,7 @@ CREATE TABLE VisitorVisa (
 CREATE TABLE Permit (
     PassportID CHAR(8),
     PermitID CHAR(10),
-    StartDate DATE,
+    IssueDate DATE,
     ExpiryDate DATE,
     ApplicationID INT,
     PRIMARY KEY(PassportID, PermitID),

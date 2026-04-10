@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Border Crossing Query</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Border Crossing Query</h2>
+
+        <form method="POST">
+
+            <div class="row">
+
+                <!-- Action -->
+                <div>
+                    <select name="action" id="actionSelect" onchange="onActionChange()">
+                        <option>Find</option>
+                        <option>Count</option>
+                        <option>Max</option>
+                        <option>Min</option>
+                    </select>
+                </div>
+
+                <div style="display:flex; align-items:center; padding:0 10px;">
+                    <strong>Border Crossing</strong>
+                </div>
+
+                <!-- Field selector -->
+                <div>
+                    <select name="field" id="fieldSelect" onchange="requestInput()">
+                        <option value="none">N/A</option>
+                        <option value="date">Date</option>
+                        <option value="time">Time</option>
+                        <option value="city">City</option>
+                        <option value="province">Province</option>
+                        <option value="postal">Postal Code</option>
+                        <option value="entry">Entry</option>
+                        <option value="exit">Exit</option>
+                        <option value="nc">Non-Citizen</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="row">
+            <!-- DATE FILTER -->
+            <div id="dateSection" class="hidden section">
+                <select name="dateCondition">
+                    <option>Before</option>
+                    <option>On</option>
+                    <option>After</option>
+                </select>
+
+                <input type="date" name="dateValue">
+            </div>
+
+            <!-- TIME FILTER -->
+            <div id="timeSection" class="hidden section">
+                <select name="timeCondition">
+                    <option>Before</option>
+                    <option>On</option>
+                    <option>After</option>
+                </select>
+
+                <input type="time" name="timeValue">
+            </div>
+
+            <!-- NON-CITIZEN FILTER -->
+            <div id="ncSection" class="hidden section" onchange="requestNCInput()">
+                <select name="ncCondition">
+                    <option>First Name</option>
+                    <option>Last Name</option>
+                    <option>City</option>
+                    <option>Province</option>
+                    <option>Country of Origin</option>
+                </select>
+            </div>
+
+            <!-- TEXT INPUT -->
+            <div id="textSection" class="hidden section">
+                <input type="text" name="textValue" placeholder="Enter text">
+            </div>
+
+            </div>
+
+            <button type="submit">Search</button>
+
+        </form>
+
+    </div>
+
+    <script>
+        function onActionChange() {
+            const action = document.getElementById("actionSelect").value;
+            const field = document.getElementById("fieldSelect");
+
+            resetAllConditional();
+            field.value = "none";
+
+            for (let option of field.options) {
+                option.hidden = false;
+            }
+
+            applyRules(action);
+        }
+
+        function applyRules(action) {
+            const field = document.getElementById("fieldSelect");
+
+            const isAggregate = (action === "Max" || action === "Min");
+
+            if (isAggregate) {
+                for (let option of field.options) {
+                    if (option.value === "city" || option.value === "province" || option.value === "none" || option.value === "nc"
+                        || option.value === "entry" || option.value === "exit" || option.value === "postal") {
+                        option.hidden = true;
+                    }
+                }
+            }
+        }
+
+        function requestInput() {
+            const field = document.getElementById("fieldSelect").value;
+
+            document.getElementById("dateSection").classList.add("hidden");
+            document.getElementById("timeSection").classList.add("hidden");
+            document.getElementById("textSection").classList.add("hidden");
+            document.getElementById("ncSection").classList.add("hidden");
+
+            if (field === "date") {
+                document.getElementById("dateSection").classList.remove("hidden");
+            } else if (field === "time") {
+                document.getElementById("timeSection").classList.remove("hidden");
+            } else if (field === "city" || field === "province" || field === "postal") {
+                document.getElementById("textSection").classList.remove("hidden");
+            } else if (field === "nc") {
+                document.getElementById("ncSection").classList.remove("hidden");
+                document.getElementById("textSection").classList.remove("hidden");
+            }
+        }
+
+        function resetAllConditional() {
+            // hide all sections
+            document.getElementById("dateSection").classList.add("hidden");
+            document.getElementById("timeSection").classList.add("hidden");
+            document.getElementById("textSection").classList.add("hidden");
+            document.getElementById("ncSection").classList.add("hidden");
+
+            // reset inputs inside them
+            document.querySelectorAll("#dateSection input, #dateSection select")
+                .forEach(el => el.value = "");
+            document.querySelectorAll("#timeSection input, #timeSection select")
+                .forEach(el => el.value = "");
+            document.querySelectorAll("#textSection input")
+                .forEach(el => el.value = "");
+            document.querySelectorAll("#ncSection select")
+                .forEach(el => el.selectedIndex = 0);
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,6 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 from db import get_connection
-from query_builders import visa, permit, application
+from query_builders import permit, visa
 
 app = Flask(__name__)
 
@@ -11,6 +11,7 @@ def home():
 
 @app.route("/select", methods=["POST"])
 def select():
+    print("SELECTED")
     entity = request.form.get("entity")
     action = request.form.get("action")
 

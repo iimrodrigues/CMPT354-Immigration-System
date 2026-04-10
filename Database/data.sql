@@ -85,7 +85,7 @@ VALUES
 ('IJ567890', 'VJ012345');
 
 INSERT INTO Permit
-(PassportID, PermitID, StartDate, ExpiryDate, ApplicationID)
+(PassportID, PermitID, IssueDate, ExpiryDate, ApplicationID)
 VALUES
 ('AB123456', 'S123456789', '2015-06-01', '2019-06-01', 1),
 ('CD234567', 'S234567890', '2016-09-01', '2020-09-01', 2),
