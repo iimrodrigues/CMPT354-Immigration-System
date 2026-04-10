@@ -22,6 +22,8 @@ def select():
         return redirect(url_for("application_query"))
     elif entity == "Border Crossing" and action == "Query":
         return redirect(url_for("bordercrossing_query"))
+    elif entity == "Non-Citizen" and action == "Query":
+        return redirect(url_for("noncitizen_query"))
 
     return f"You selected {entity} + {action}"
 
@@ -44,6 +46,11 @@ def application_query():
 @app.route("/bordercrossing/query", methods=["GET", "POST"])
 def bordercrossing_query():
     return render_template("bordercrossing/query.html")
+
+## NON-CITIZEN ACTIONS
+@app.route("/noncitizen/query", methods=["GET", "POST"])
+def noncitizen_query():
+    return render_template("noncitizen/query.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
