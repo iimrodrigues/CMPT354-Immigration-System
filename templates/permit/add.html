@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Permit Add</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Permit Add</h2>
+
+        <form method="POST">
+
+            <div class="row">
+            <section>
+
+                <!-- passportID INPUT -->
+                <label for="passportId">Passport ID</label>
+                <input type="text" id="passportID" name="passportID" placeholder="Enter Existing Passport ID" maxlength="8">
+
+                <!-- visaID INPUT -->
+                <label for="permitId">Permit ID</label>
+                <input type="text" id="permitID" name="permitID" placeholder="Enter 8-character Permit ID" maxlength="8">
+            
+                <!-- Application ID INPUT --> 
+                <label for="applicationID">Application ID</label>
+                <input type="number" id="applicationID" name="applicationID" placeholder="Enter Existing Application ID">
+                
+                <!-- issue date input -->
+                <label for="issueDate">Issue Date</label>
+                <input type="date" id="issueDate" name="issueDate">
+
+                <!-- expiry date input -->
+                <label for="expiryDate">Expiry Date</label>
+                <input type="date" id="expiryDate" name="expiryDate">
+
+                <!-- TYPE FILTER -->
+                <label for="permitType">Permit Type</label>
+                <select id="permitType" name="permitType">
+                    <option>All</option>
+                    <option>Work Permit</option>
+                    <option>Study Permit</option>
+                </select>
+
+            </section>
+            </div>
+
+            <button type="submit">Submit</button>
+
+        </form>
+
+    <div class="table-container">
+        {% if results is not none %}
+
+        <table class="result-table">
+
+            <thead>
+                <tr>
+                    {% for key in results[0].keys() %}
+                    <th>{{ key }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for row in results %}
+                <tr>
+                    {% for value in row.values() %}
+                    <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+
+        {% endif %}
+    </div>
+</div>
+
+</body>
+
+</html>
