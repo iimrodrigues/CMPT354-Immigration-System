@@ -26,6 +26,17 @@ def select():
     elif entity == "Non-Citizen" and action == "Query":
         return redirect(url_for("noncitizen_query"))
 
+    if entity == "Visa" and action == "Remove":
+        return redirect(url_for("visa_remove"))
+    elif entity == "Permit" and action == "Remove":
+        return redirect(url_for("permit_remove"))
+    elif entity == "Application" and action == "Remove":
+        return redirect(url_for("application_remove"))
+    elif entity == "Border Crossing" and action == "Remove":
+        return redirect(url_for("bordercrossing_remove"))
+    elif entity == "Non-Citizen" and action == "Remove":
+        return redirect(url_for("noncitizen_remove"))
+
     if entity == "Visa" and action == "Update":
         return redirect(url_for("visa_update"))
     elif entity == "Permit" and action == "Update":
@@ -56,6 +67,20 @@ def visa_query():
         
     return render_template("visa/query.html", results=None)
 
+@app.route("/visa/remove", methods=["GET", "POST"])
+def visa_remove():
+    if request.method == "POST":
+        sql = visa.visa_remove(request.form)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        if(results): return render_template("visa/remove.html", results=results)
+        
+    return render_template("visa/remove.html", results=None)
+
 ## PERMIT ACTIONS
 @app.route("/permit/query", methods=["GET", "POST"])
 def permit_query():
@@ -70,6 +95,20 @@ def permit_query():
         return render_template("permit/query.html", results=results)
     
     return render_template("permit/query.html", results=None)
+
+@app.route("/permit/remove", methods=["GET", "POST"])
+def permit_remove():
+    if request.method == "POST":
+        sql = permit.permit_remove(request.form)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        if(results): return render_template("permit/remove.html", results=results)
+    
+    return render_template("permit/remove.html", results=None)
 
 @app.route('/permit/update', methods=['GET', 'POST'])
 def permit_update():

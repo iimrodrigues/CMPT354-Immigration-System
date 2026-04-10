@@ -51,3 +51,14 @@ def get_visa_query(form):
             return f"SELECT {selection} FROM Visa WHERE Visa.ExpiryDate > '{date}';"
     elif field == "id":
         return f"SELECT {selection} FROM Visa WHERE Visa.VisaID = '{id}';"
+
+def visa_remove(form):
+    id = form.get("visaID")
+
+    return f"""
+            START TRANSACTION;
+            DELETE from TransitVisa WHERE PassportID = (SELECT PassportID FROM Visa WHERE VisaID = '{id}');
+            DELETE from VisitorVisa WHERE PassportID = (SELECT PassportID FROM Visa WHERE VisaID = '{id}');            
+            DELETE from Visa WHERE VisaID = '{id}';
+            COMMIT;
+            """
