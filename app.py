@@ -63,7 +63,6 @@ def permit_query():
 def application_query():
     if request.method == "POST":
         (sql, params) = application.get_application_query(request.form)
-        print(sql, params)
             
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
