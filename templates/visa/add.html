@@ -15,27 +15,19 @@
         <form method="POST">
 
             <div class="row">
-
-                <div style="display:flex; align-items:center; padding:0 10px;">
-                    <strong>Visa</strong>
-                </div>
-
-            </div>
-
-            <div class="row">
             <section>
 
                 <!-- passportID INPUT -->
                 <label for="passportId">Passport ID</label>
-                <input type="text" id="passportID" name="passportID" placeholder="Enter 8-character Passport ID" maxlength="8">
+                <input type="text" id="passportID" name="passportID" placeholder="Enter Existing Passport ID" maxlength="8">
 
                 <!-- visaID INPUT -->
-                <label for="passportId">Visa ID</label>
+                <label for="visaId">Visa ID</label>
                 <input type="text" id="visaID" name="visaID" placeholder="Enter 8-character Visa ID" maxlength="8">
             
                 <!-- Application ID INPUT -->
                 <label for="applicationID">Application ID</label>
-                <input type="number" id="applicationID" name="applicationID" placeholder="Enter Application ID">
+                <input type="number" id="applicationID" name="applicationID" placeholder="Enter Existing Application ID">
                 
                 <!-- issue date input -->
                 <label for="issueDate">Issue Date</label>
@@ -60,8 +52,10 @@
                     <option>Transit Visa</option>
                     <option>Visitor Visa</option>
                 </select>
+
             </section>
             </div>
+
             <button type="submit">Submit</button>
 
         </form>

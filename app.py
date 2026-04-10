@@ -122,6 +122,20 @@ def permit_remove():
     
     return render_template("permit/remove.html", results=None)
 
+@app.route("/permit/add", methods=["GET", "POST"])
+def permit_add():
+    if request.method == "POST":
+        sql = permit.permit_add(request.form)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        if(results): return render_template("permit/add.html", results=results)
+    
+    return render_template("permit/add.html", results=None)
+
 ## APPLICATION ACTIONS
 @app.route("/application/query", methods=["GET", "POST"])
 def application_query():
