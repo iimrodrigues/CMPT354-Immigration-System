@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Immigration System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+<div class="container">
+
+    <h1>Canadian Immigration Database Management System</h1>
+
+    <form method="POST" action="/select">
+
+        <div class="row">
+
+            <div>
+                <label>Entity</label>
+                <select name="entity">
+                    <option>Non-Citizen</option>
+                    <option>Border Crossing</option>
+                    <option>Visa</option>
+                    <option>Permit</option>
+                    <option>Application</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Action</label>
+                <select name="action">
+                    <option>Add</option>
+                    <option>Remove</option>
+                    <option>Update</option>
+                    <option>Query</option>
+                </select>
+            </div>
+
+        </div>
+
+        <button type="submit">Continue</button>
+
+    </form>
+
+</div>
+</body>
+</html>
