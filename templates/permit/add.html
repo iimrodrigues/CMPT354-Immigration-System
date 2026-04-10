@@ -17,17 +17,17 @@
             <div class="row">
             <section>
 
-                <!-- passportID INPUT -->
+                <!-- Passport ID INPUT -->
                 <label for="passportId">Passport ID</label>
-                <input type="text" id="passportID" name="passportID" placeholder="Enter Existing Passport ID" maxlength="8">
+                <input type="text" id="passportID" name="passportID" placeholder="Existing 8-character Passport ID" maxlength="8">
 
-                <!-- visaID INPUT -->
+                <!-- Permit ID INPUT -->
                 <label for="permitId">Permit ID</label>
-                <input type="text" id="permitID" name="permitID" placeholder="Enter 8-character Permit ID" maxlength="8">
+                <input type="text" id="permitID" name="permitID" placeholder="8-character Permit ID" maxlength="8">
             
                 <!-- Application ID INPUT --> 
                 <label for="applicationID">Application ID</label>
-                <input type="number" id="applicationID" name="applicationID" placeholder="Enter Existing Application ID">
+                <input type="number" id="applicationID" name="applicationID" placeholder="Existing Application ID Number">
                 
                 <!-- issue date input -->
                 <label for="issueDate">Issue Date</label>
@@ -37,7 +37,7 @@
                 <label for="expiryDate">Expiry Date</label>
                 <input type="date" id="expiryDate" name="expiryDate">
 
-                <!-- TYPE FILTER -->
+                <!-- Permit TYPE FILTER -->
                 <label for="permitType">Permit Type</label>
                 <select id="permitType" name="permitType">
                     <option>All</option>
@@ -48,38 +48,11 @@
             </section>
             </div>
 
-            <button type="submit">Submit</button>
+            <button type="submit">Add</button>
 
         </form>
 
-    <div class="table-container">
-        {% if results is not none %}
-
-        <table class="result-table">
-
-            <thead>
-                <tr>
-                    {% for key in results[0].keys() %}
-                    <th>{{ key }}</th>
-                    {% endfor %}
-                </tr>
-            </thead>
-
-            <tbody>
-                {% for row in results %}
-                <tr>
-                    {% for value in row.values() %}
-                    <td>{{ value }}</td>
-                    {% endfor %}
-                </tr>
-                {% endfor %}
-            </tbody>
-
-        </table>
-
-        {% endif %}
     </div>
-</div>
 
 </body>
 
