@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request
 from db import get_connection
+from query_builders import visa
 
 app = Flask(__name__)
 
@@ -30,7 +31,18 @@ def select():
 ## VISA ACTIONS
 @app.route("/visa/query", methods=["GET", "POST"])
 def visa_query():
-    return render_template("visa/query.html")
+    if request.method == "POST":
+        sql = visa.get_visa_query(request.form)
+        print(sql)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        return render_template("visa/query.html", results=results)
+        
+    return render_template("visa/query.html", results=None)
 
 ## PERMIT ACTIONS
 @app.route("/permit/query", methods=["GET", "POST"])
