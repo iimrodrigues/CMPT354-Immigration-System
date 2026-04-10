@@ -57,7 +57,7 @@ def visa_query():
 @app.route("/visa/remove", methods=["GET", "POST"])
 def visa_remove():
     if request.method == "POST":
-        sql = visa.get_visa_remove(request.form)
+        sql = visa.visa_remove(request.form)
         
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
@@ -82,6 +82,20 @@ def permit_query():
         return render_template("permit/query.html", results=results)
     
     return render_template("permit/query.html", results=None)
+
+@app.route("/permit/remove", methods=["GET", "POST"])
+def permit_remove():
+    if request.method == "POST":
+        sql = permit.permit_remove(request.form)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        if(results): return render_template("permit/remove.html", results=results)
+    
+    return render_template("permit/remove.html", results=None)
 
 ## APPLICATION ACTIONS
 @app.route("/application/query", methods=["GET", "POST"])

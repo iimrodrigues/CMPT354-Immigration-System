@@ -51,3 +51,14 @@ def get_permit_query(form):
             return f"SELECT {selection} FROM Permit WHERE Permit.ExpiryDate > '{date}';"
     elif field == "id":
         return f"SELECT {selection} FROM Permit WHERE Permit.PermitID = '{id}';"
+
+def permit_remove(form):
+    id = form.get("permitID")
+
+    return f"""
+            START TRANSACTION;
+            DELETE from StudyPermit WHERE PassportID = (SELECT PassportID FROM Permit WHERE PermitID = '{id}');
+            DELETE from WorkPermit WHERE PassportID = (SELECT PassportID FROM Permit WHERE PermitID = '{id}');            
+            DELETE from Permit WHERE PermitID = '{id}';
+            COMMIT;
+            """
