@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request
 from db import get_connection
-from query_builders import permit, visa
+from query_builders import permit, visa, noncitizen, bordercrossing, application
 
 app = Flask(__name__)
 
@@ -141,15 +141,57 @@ def permit_add():
 def application_query():
     return render_template("application/query.html")
 
+@app.route("/noncitizen/add", methods=["GET", "POST"])
+def application_add():
+    if request.method == "POST":
+        sql = application.application_add(request.form)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        if(results): return render_template("application/add.html", results=results)
+    
+    return render_template("application/add.html", results=None)
+
 ## BORDER CROSSING ACTIONS
 @app.route("/bordercrossing/query", methods=["GET", "POST"])
 def bordercrossing_query():
     return render_template("bordercrossing/query.html")
 
+@app.route("/bordercrossing/add", methods=["GET", "POST"])
+def bordercrossing_add():
+    if request.method == "POST":
+        sql = bordercrossing.bordercrossing_add(request.form)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        if(results): return render_template("bordercrossing/add.html", results=results)
+    
+    return render_template("bordercrossing/add.html", results=None)
+
 ## NON-CITIZEN ACTIONS
 @app.route("/noncitizen/query", methods=["GET", "POST"])
 def noncitizen_query():
     return render_template("noncitizen/query.html")
+
+@app.route("/noncitizen/add", methods=["GET", "POST"])
+def noncitizen_add():
+    if request.method == "POST":
+        sql = noncitizen.noncitizen_add(request.form)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        if(results): return render_template("noncitizen/add.html", results=results)
+    
+    return render_template("noncitizen/add.html", results=None)
 
 if __name__ == "__main__":
     app.run(debug=True)
