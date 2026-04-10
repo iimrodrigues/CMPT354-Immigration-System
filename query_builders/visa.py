@@ -1,5 +1,41 @@
 import re
 
+def update_query(form):
+    field = form.get("field")
+    passport_id = form.get("passportID")
+    visa_id = form.get("visaID")
+    date_value = form.get("dateValue")
+    text_value = form.get("textValue")
+
+    if not passport_id or not visa_id or not field or field == "none":
+        return None, None, "Please fill in all fields."
+
+    field_map = {
+        "IssueDate": "IssueDate",
+        "ExpiryDate": "ExpiryDate",
+        "StayStatus": "StayStatus"
+    }
+
+    if field not in field_map:
+        return None, None, "Invalid field selected."
+
+    sql_field = field_map[field]
+
+    # Decide value type
+    value = date_value if field in ["IssueDate", "ExpiryDate"] else text_value
+
+    if not value:
+        return None, None, "Please provide a value."
+
+    query = f"""
+        UPDATE Visa
+        SET {sql_field} = %s
+        WHERE PassportID = %s AND VisaID = %s
+    """
+
+    params = (value, passport_id, visa_id)
+
+    return query, params, None
 
 def get_visa_query(form):
     action = form.get("action")

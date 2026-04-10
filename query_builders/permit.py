@@ -1,4 +1,4 @@
-def permit_update_query(form):
+def update_query(form):
     field = form.get("field")
     passport_id = form.get("passportID")
     permit_id = form.get("permitID")
