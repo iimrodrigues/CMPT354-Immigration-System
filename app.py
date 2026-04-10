@@ -36,6 +36,17 @@ def select():
         return redirect(url_for("bordercrossing_remove"))
     elif entity == "Non-Citizen" and action == "Remove":
         return redirect(url_for("noncitizen_remove"))
+    
+    if entity == "Visa" and action == "Add":
+        return redirect(url_for("visa_add"))
+    elif entity == "Permit" and action == "Add":
+        return redirect(url_for("permit_add"))
+    elif entity == "Application" and action == "Add":
+        return redirect(url_for("application_add"))
+    elif entity == "Border Crossing" and action == "Add":
+        return redirect(url_for("bordercrossing_add"))
+    elif entity == "Non-Citizen" and action == "Add":
+        return redirect(url_for("noncitizen_add"))
 
     return f"You selected {entity} + {action}"
 
@@ -67,6 +78,20 @@ def visa_remove():
         if(results): return render_template("visa/remove.html", results=results)
         
     return render_template("visa/remove.html", results=None)
+
+@app.route("/visa/add", methods=["GET", "POST"])
+def visa_add():
+    if request.method == "POST":
+        sql = visa.visa_add(request.form)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        if(results): return render_template("visa/add.html", results=results)
+        
+    return render_template("visa/add.html", results=None)
 
 ## PERMIT ACTIONS
 @app.route("/permit/query", methods=["GET", "POST"])
