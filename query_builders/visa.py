@@ -1,3 +1,6 @@
+import re
+
+
 def get_visa_query(form):
     action = form.get("action")
     field = form.get("field")
@@ -13,44 +16,44 @@ def get_visa_query(form):
         selection = "COUNT(*)"
     elif action == "Max":
         if field == "issue":
-            return f"SELECT * FROM Visa WHERE IssueDate = (SELECT MAX(IssueDate) FROM Visa);"
+            return f"SELECT * FROM Visa WHERE IssueDate = (SELECT MAX(IssueDate) FROM Visa);", ()
         elif field == "expiry":
-            return f"SELECT * FROM Visa WHERE ExpiryDate = (SELECT MAX(ExpiryDate) FROM Visa);"
+            return f"SELECT * FROM Visa WHERE ExpiryDate = (SELECT MAX(ExpiryDate) FROM Visa);", ()
         else:
             selection = "*"
     elif action == "Min":
         if field == "issue":
-            return f"SELECT * FROM Visa WHERE IssueDate = (SELECT MIN(IssueDate) FROM Visa);"
+            return f"SELECT * FROM Visa WHERE IssueDate = (SELECT MIN(IssueDate) FROM Visa);", ()
         elif field == "expiry":
-            return f"SELECT * FROM Visa WHERE ExpiryDate = (SELECT MIN(ExpiryDate) FROM Visa);"
+            return f"SELECT * FROM Visa WHERE ExpiryDate = (SELECT MIN(ExpiryDate) FROM Visa);", ()
         else:
             selection = "*"
 
     if field == "none":
-        return f"SELECT {selection} FROM Visa;"
+        return f"SELECT {selection} FROM Visa;", ()
     elif field == "type":
         if type == "All":
-            return f"SELECT {selection} FROM Visa;"
+            return f"SELECT {selection} FROM Visa;", ()
         elif type == "Transit Visa":
-            return f"SELECT {selection} FROM Visa JOIN TransitVisa ON Visa.VisaID = TransitVisa.VisaID;"
+            return f"SELECT {selection} FROM Visa JOIN TransitVisa ON Visa.VisaID = TransitVisa.VisaID;", ()
         elif type == "Visitor Visa":
-            return f"SELECT {selection} FROM Visa JOIN VisitorVisa ON Visa.VisaID = VisitorVisa.VisaID;"
+            return f"SELECT {selection} FROM Visa JOIN VisitorVisa ON Visa.VisaID = VisitorVisa.VisaID;", ()
     elif field == "issue":
         if dateCondition == "Before":
-            return f"SELECT {selection} FROM Visa WHERE Visa.IssueDate < '{date}';"
+            return f"SELECT {selection} FROM Visa WHERE Visa.IssueDate < %s;", (date,)
         elif dateCondition == "On":
-            return f"SELECT {selection} FROM Visa WHERE Visa.IssueDate = '{date}';"
+            return f"SELECT {selection} FROM Visa WHERE Visa.IssueDate = %s;", (date,)
         elif dateCondition == "After":
-            return f"SELECT {selection} FROM Visa WHERE Visa.IssueDate > '{date}';"
+            return f"SELECT {selection} FROM Visa WHERE Visa.IssueDate > %s;", (date,)
     elif field == "expiry":
         if dateCondition == "Before":
-            return f"SELECT {selection} FROM Visa WHERE Visa.ExpiryDate < '{date}';"
+            return f"SELECT {selection} FROM Visa WHERE Visa.ExpiryDate < %s;", (date,)
         elif dateCondition == "On":
-            return f"SELECT {selection} FROM Visa WHERE Visa.ExpiryDate = '{date}';"
+            return f"SELECT {selection} FROM Visa WHERE Visa.ExpiryDate = %s;", (date,)
         elif dateCondition == "After":
-            return f"SELECT {selection} FROM Visa WHERE Visa.ExpiryDate > '{date}';"
+            return f"SELECT {selection} FROM Visa WHERE Visa.ExpiryDate > %s;", (date,)
     elif field == "id":
-        return f"SELECT {selection} FROM Visa WHERE Visa.VisaID = '{id}';"
+            return f"SELECT {selection} FROM Visa WHERE Visa.VisaID = %s;", (id,)
 
 def visa_remove(form):
     id = form.get("visaID")

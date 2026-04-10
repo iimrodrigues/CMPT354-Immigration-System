@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request
 from db import get_connection
-from query_builders import permit, visa
+from query_builders import application, permit, visa
 
 app = Flask(__name__)
 
