@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request
 from db import get_connection
-from query_builders import application, permit, visa
+from query_builders import application, bordercrossing, permit, visa
 
 app = Flask(__name__)
 
@@ -76,7 +76,17 @@ def application_query():
 ## BORDER CROSSING ACTIONS
 @app.route("/bordercrossing/query", methods=["GET", "POST"])
 def bordercrossing_query():
-    return render_template("bordercrossing/query.html")
+    if request.method == "POST":
+        (sql, params) = bordercrossing.get_bordercrossing_query(request.form)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql, params)
+        results = cursor.fetchall()
+        return render_template("bordercrossing/query.html", results=results)
+    
+    return render_template("bordercrossing/query.html", results=None)
 
 ## NON-CITIZEN ACTIONS
 @app.route("/noncitizen/query", methods=["GET", "POST"])
