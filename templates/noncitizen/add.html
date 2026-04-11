@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Non-Citizen Add</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Non-Citizen Add</h2>
+
+        <form method="POST">
+
+            <div class="row">
+            <section>
+                <div class="section-label">Personal Information</div>
+                <br></br>
+
+                <!-- Passport ID INPUT -->
+                <label for="passportId">Passport ID</label>
+                <input type="text" id="passportID" name="passportID" placeholder="8-character Passport ID" maxlength="8">
+
+                <!-- First Name INPUT -->
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" placeholder="First Name" maxlength="25">
+
+                <!-- Middle Name INPUT -->
+                <label for="middleName">Middle Name</label>
+                <input type="text" id="middleName" name="middleName" placeholder="Middle Name (Optional)" maxlength="25">
+                
+                <!-- Last Name INPUT -->
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" placeholder="Last Name" maxlength="25">
+               
+                <!-- DOB date input -->
+                <label for="dob">DOB</label>
+                <input type="date" id="dob" name="dob">
+
+            </section>
+
+            <section>
+                <div class="section-label">Personal Address</div>
+                <br></br>
+
+                <!-- Country INPUT -->
+                <label for="country">Country of Origin</label>
+                <input type="text" id="country" name="country" placeholder="Country of Origin" maxlength="25">
+
+                <!-- Street Name INPUT -->
+                <label for="street">Current Street Address</label>
+                <input type="text" id="street" name="street" placeholder="Current Street Address" maxlength="25">
+
+                <!-- City INPUT -->
+                <label for="city">City</label>
+                <input type="text" id="city" name="city" placeholder="City" maxlength="25">
+                
+                <!-- Province INPUT -->
+                <label for="province">Province</label>
+                <select id="province" name="province">
+                    <option>- Select Province -</option>
+                    <option>British Colombia</option>
+                    <option>Alberta</option>
+                    <option>Saskatchewan</option>
+                    <option>Manitoba</option>
+                    <option>Ontario</option>
+                    <option>Quebec</option>
+                    <option>New Brunswick</option>
+                    <option>Nova Scotia</option>
+                    <option>Prince Edward Island</option>
+                    <option>Newfoundland and Labrador</option>
+                </select>
+               
+                <!-- Postal Code input -->
+                <label for="postal">Postal Code</label>
+                <input type="text" id="postal" name="postal" placeholder="0X0 X0X", maxlength="7">
+
+            </section>
+            </div>
+
+            <div class="row">
+            <section>
+            <!-- Permit TYPE FILTER -->
+                <label for="criminalRecord">Criminal Record</label>
+                <select id="criminalRecord" name="criminalRecord">
+                    <option>No</option>
+                    <option>Yes</option>
+                </select>
+            </section>
+            </div>
+
+            <button type="submit">Add</button>
+
+        </form>
+
+    </div>
+
+</body>
+
+</html>

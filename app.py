@@ -36,7 +36,7 @@ def select():
         return redirect(url_for("bordercrossing_remove"))
     elif entity == "Non-Citizen" and action == "Remove":
         return redirect(url_for("noncitizen_remove"))
-
+    
     if entity == "Visa" and action == "Update":
         return redirect(url_for("visa_update"))
     elif entity == "Permit" and action == "Update":
@@ -48,8 +48,18 @@ def select():
     elif entity == "Non-Citizen" and action == "Update":
         return redirect(url_for("noncitizen_update"))
 
-    print(entity, action)
+    if entity == "Visa" and action == "Add":
+        return redirect(url_for("visa_add"))
+    elif entity == "Permit" and action == "Add":
+        return redirect(url_for("permit_add"))
+    elif entity == "Application" and action == "Add":
+        return redirect(url_for("application_add"))
+    elif entity == "Border Crossing" and action == "Add":
+        return redirect(url_for("bordercrossing_add"))
+    elif entity == "Non-Citizen" and action == "Add":
+        return redirect(url_for("noncitizen_add"))
 
+    print(entity, action)
     return f"You selected {entity} + {action}"
 
 ## VISA ACTIONS
@@ -119,6 +129,20 @@ def visa_update():
 
     return render_template('visa/update.html', results=None)
 
+app.route("/visa/add", methods=["GET", "POST"])
+def visa_add():
+    if request.method == "POST":
+        sql = visa.visa_add(request.form)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        if(results): return render_template("visa/add.html", results=results)
+        
+    return render_template("visa/add.html", results=None)
+
 ## PERMIT ACTIONS
 @app.route("/permit/remove", methods=["GET", "POST"])
 def permit_remove():
@@ -182,6 +206,20 @@ def permit_update():
 
     return render_template('permit/update.html', results=None)
 
+app.route("/permit/add", methods=["GET", "POST"])
+def permit_add():
+    if request.method == "POST":
+        sql = permit.permit_add(request.form)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        if(results): return render_template("permit/add.html", results=results)
+    
+    return render_template("permit/add.html", results=None)
+
 ## APPLICATION ACTIONS
 @app.route("/application/query", methods=["GET", "POST"])
 def application_query():
@@ -197,6 +235,34 @@ def application_query():
         return render_template("application/query.html", results=results)
         
     return render_template("application/query.html", results=None)
+
+@app.route("/application/remove", methods=["GET", "POST"])
+def application_remove():
+    if request.method == "POST":
+        sql = application.application_remove(request.form)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        if(results): return render_template("application/remove.html", results=results)
+    
+    return render_template("application/remove.html", results=None)
+
+@app.route("/application/add", methods=["GET", "POST"])
+def application_add():
+    if request.method == "POST":
+        sql = application.application_add(request.form)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        if(results): return render_template("application/add.html", results=results)
+    
+    return render_template("application/add.html", results=None)
 
 @app.route('/application/update', methods=['GET', 'POST'])
 def application_update():
@@ -278,6 +344,34 @@ def bordercrossing_update():
 
     return render_template('bordercrossing/update.html', results=None)
 
+@app.route("/bordercrossing/remove", methods=["GET", "POST"])
+def bordercrossing_remove():
+    if request.method == "POST":
+        sql = bordercrossing.bordercrossing_remove(request.form)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        if(results): return render_template("bordercrossing/remove.html", results=results)
+    
+    return render_template("bordercrossing/remove.html", results=None)
+
+@app.route("/bordercrossing/add", methods=["GET", "POST"])
+def bordercrossing_add():
+    if request.method == "POST":
+        sql = bordercrossing.bordercrossing_add(request.form)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        if(results): return render_template("bordercrossing/add.html", results=results)
+    
+    return render_template("bordercrossing/add.html", results=None)
+
 ## NON-CITIZEN ACTIONS
 @app.route("/noncitizen/query", methods=["GET", "POST"])
 def noncitizen_query():
@@ -319,6 +413,34 @@ def noncitizen_update():
         )
 
     return render_template('noncitizen/update.html', results=None)
+
+@app.route("/noncitizen/remove", methods=["GET", "POST"])
+def noncitizen_remove():
+    if request.method == "POST":
+        sql = noncitizen.noncitizen_remove(request.form)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        if(results): return render_template("noncitizen/remove.html", results=results)
+    
+    return render_template("noncitizen/remove.html", results=None)
+
+@app.route("/noncitizen/add", methods=["GET", "POST"])
+def noncitizen_add():
+    if request.method == "POST":
+        sql = noncitizen.noncitizen_add(request.form)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        if(results): return render_template("noncitizen/add.html", results=results)
+    
+    return render_template("noncitizen/add.html", results=None)
 
 if __name__ == "__main__":
     app.run(debug=True)

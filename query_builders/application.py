@@ -88,3 +88,36 @@ def update_query(form):
     params = (status_value, application_id)
 
     return query, params, None
+
+def application_remove(form):
+    applicationID = form.get("applicationID")  
+
+    if(not applicationID): return "--" 
+
+    return f"""
+            START TRANSACTION;
+            DELETE FROM StudyPermit WHERE PassportID = (SELECT PassportID FROM Permit WHERE ApplicationID = {applicationID});
+            DELETE FROM WorkPermit WHERE PassportID = (SELECT PassportID FROM Permit WHERE ApplicationID = {applicationID});
+            DELETE FROM Permit WHERE ApplicationID = {applicationID};
+            DELETE FROM TransitVisa WHERE PassportID = (SELECT PassportID FROM Visa WHERE ApplicationID = {applicationID});
+            DELETE FROM VisitorVisa WHERE PassportID = (SELECT PassportID FROM Visa WHERE ApplicationID = {applicationID});
+            DELETE FROM Visa WHERE ApplicationID = {applicationID};
+            DELETE FROM SUBMITS WHERE ApplicationID = {applicationID};
+            DELETE FROM SupportingDocuments WHERE ApplicationID = {applicationID};
+            DELETE FROM Application WHERE ApplicationID = {applicationID};
+            COMMIT;
+            """
+
+def application_add(form):
+    applicationID = form.get("applicationID")  
+    status = form.get("status")
+
+    if(not applicationID): return "--" 
+    if(status == "- Select Application Status -"): return "--"
+
+    return f"""
+            START TRANSACTION;
+            INSERT INTO Application (ApplicationID, Status)
+            VALUES ({applicationID}, '{status}');
+            COMMIT;
+            """

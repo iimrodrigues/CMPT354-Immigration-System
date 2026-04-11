@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Application Add</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Application Add</h2>
+
+        <form method="POST">
+
+            <div class="row">
+            <section>
+
+                <!-- Application ID INPUT --> 
+                <label for="applicationID">Application ID</label>
+                <input type="number" id="applicationID" name="applicationID" placeholder="New Application ID Number">
+
+                <!-- Permit TYPE FILTER -->
+                <label for="status">Application Status</label>
+                <select id="status" name="status">
+                    <option>- Select Application Status -</option>
+                    <option>Submitted</option>
+                    <option>In Progress</option>
+                    <option>Approved</option>
+                    <option>Rejected</option>
+                </select>
+
+            </section>
+            </div>
+
+            <button type="submit">Remove</button>
+
+        </form>
+
+    </div>
+
+</body>
+
+</html>

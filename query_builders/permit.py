@@ -35,6 +35,8 @@ def update_query(form):
 def permit_remove(form):
     id = form.get("permitID")
 
+    if(not id): return "--"
+
     return f"""
             START TRANSACTION;
             DELETE from StudyPermit WHERE PassportID = (SELECT PassportID FROM Permit WHERE PermitID = '{id}');
@@ -42,3 +44,47 @@ def permit_remove(form):
             DELETE from Permit WHERE PermitID = '{id}';
             COMMIT;
             """
+
+def permit_add(form):
+    passportID = form.get("passportID")
+    permitID = form.get("permitID")
+    applicationID = form.get("applicationID")  
+    issueDate = form.get("issueDate")
+    expiryDate = form.get("expiryDate")
+    permitType = form.get("permitType")
+
+    if(not passportID): return "--"
+    if(not permitID): return "--"
+    if(not applicationID): return "--" 
+    if(not issueDate): return "--"
+    if(not expiryDate): return "--"
+
+    if(permitType == "All"):
+        return f"""
+                START TRANSACTION;
+                INSERT INTO Permit (PassportID, PermitID, IssueDate, ExpiryDate, ApplicationID)
+                VALUES ('{passportID}', '{permitID}', '{issueDate}', '{expiryDate}', {applicationID});
+                INSERT INTO WorkPermit (PassportID, PermitID)
+                VALUES ('{passportID}', '{permitID}');
+                INSERT INTO StudyPermit (PassportID, PermitID)
+                VALUES ('{passportID}', '{permitID}');
+                COMMIT;
+                """
+    elif(permitType == "Work Permit"):
+        return f"""
+                START TRANSACTION;
+                INSERT INTO Permit (PassportID, PermitID, IssueDate, ExpiryDate, ApplicationID)
+                VALUES ('{passportID}', '{permitID}', '{issueDate}', '{expiryDate}', {applicationID});
+                INSERT INTO WorkPermit (PassportID, PermitID)
+                VALUES ('{passportID}', '{permitID}');
+                COMMIT;
+                """
+    elif(permitType == "Study Permit"):
+        return f"""
+                START TRANSACTION;
+                INSERT INTO Permit (PassportID, PermitID, IssueDate, ExpiryDate, ApplicationID)
+                VALUES ('{passportID}', '{permitID}', '{issueDate}', '{expiryDate}', {applicationID});
+                INSERT INTO StudyPermit (PassportID, PermitID)
+                VALUES ('{passportID}', '{permitID}');
+                COMMIT;
+                """
