@@ -161,6 +161,19 @@ def visa_add():
 
 ## PERMIT ACTIONS
 @app.route('/permit/update', methods=['GET', 'POST'])
+def permit_query():
+    if request.method == "POST":
+        (sql, params) = permit.get_permit_query(request.form)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql, params)
+        results = cursor.fetchall()
+        return render_template("permit/query.html", results=results)
+    
+    return render_template("permit/query.html", results=None)
+
 def permit_update():
     if request.method == 'POST':
         (sql, params, error) = permit.update_query(request.form)
