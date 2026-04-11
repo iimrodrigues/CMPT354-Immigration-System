@@ -65,12 +65,9 @@
             <button type="submit">Search</button>
 
         </form>
-        
-        <br></br>
-        <button onclick="window.location.href='..'">Back to Home Page</button>
 
     <div class="table-container">
-        {% if results is not none %}
+        {% if results %}
 
         <table class="result-table">
 
@@ -93,9 +90,15 @@
             </tbody>
 
         </table>
+        {% else %}
+            <p>No data found matching your query.</p>
 
         {% endif %}
     </div>
+      
+        <br></br>
+        <button onclick="window.location.href='..'">Back to Home Page</button>
+  
 </div>
 
     <script>

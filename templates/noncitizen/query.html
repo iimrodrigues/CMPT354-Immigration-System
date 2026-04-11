@@ -72,15 +72,13 @@
                     <select name="application" id="applicationSelect" class="hidden section" onchange="requestApplicationInput()">
                         <option value="submission">Submission Date</option>
                         <option value="status">Application Status</option>
-                        <option value="type">Application Type</option>
                     </select>
 
                     <select name="border" id="borderSelect" class="hidden section" onchange="requestBorderInput()">
                         <option value="date">Border Crossing Date</option>
                         <option value="hasEntered">Has Entered</option>
-                        <option value="hasNotEntered">Has Not Entered</option>
                         <option value="hasExited">Has Exited</option>
-                        <option value="hasNotExited">Has Not Exited</option>
+                        <option value="allCrossingTypes">Has All Crossing Types</option>
                     </select>
 
                 </div>
@@ -104,16 +102,11 @@
                     <input type="date" name="dateValue">
                 </div>
 
-                <!-- NUMBER FILTER -->
-                <div id="numberSection" class="hidden section">
-                    <input type="number" name="numberValue" placeholder="Enter number">
-                </div>
-
                 <!-- BOOLEAN FILTER -->
                 <div id="booleanSection" class="hidden section">
                     <select name="booleanValue">
-                        <option value="true">True</option>
-                        <option value="false">False</option>
+                        <option value="1">True</option>
+                        <option value="0">False</option>
                     </select>
                 </div>
 
@@ -149,23 +142,10 @@
                 <!-- STATUS FILTER -->
                 <div id="statusSection" class="hidden section">
                     <select id="appStatus" name="appStatus">
-                        <option value="pending">Pending</option>
+                        <option value="in progress">In Progress</option>
                         <option value="approved">Approved</option>
                         <option value="rejected">Rejected</option>
-                        <option value="withdrawn">Withdrawn</option>
-                    </select>
-                </div>
-
-                <!-- APPLICATION TYPE FILTER -->
-                <div id="applicationTypeSection" class="hidden section">
-                    <select name="applicationType">
-                        <option value="all">All Types</option>
-                        <option value="anyVisa">Any Visa</option>
-                        <option value="transitVisa">Transit Visa</option>
-                        <option value="visitorVisa">Visitor Visa</option>
-                        <option value="anyPermit">Any Permit</option>
-                        <option value="workPermit">Work Permit</option>
-                        <option value="studyPermit">Study Permit</option>
+                        <option value="submitted">Submitted</option>
                     </select>
                 </div>
 
@@ -174,6 +154,36 @@
             <button type="submit">Search</button>
 
         </form>
+
+    <div class="table-container">
+            {% if results %}
+
+            <table class="result-table">
+
+                <thead>
+                    <tr>
+                        {% for key in results[0].keys() %}
+                        <th>{{ key }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for row in results %}
+                    <tr>
+                        {% for value in row.values() %}
+                        <td>{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+            {% else %}
+            <p>No data found matching your query.</p>
+
+            {% endif %}
+        </div>
         <br></br>
         <button onclick="window.location.href='..'">Back to Home Page</button>
 
@@ -211,7 +221,7 @@
             } else if (attribute == "dob") {
                 document.getElementById("dateSection").classList.remove("hidden");
             } else if (attribute == "passportID") {
-                document.getElementById("numberSection").classList.remove("hidden");
+                document.getElementById("textSection").classList.remove("hidden");
             } else if (attribute == "criminalRecord") {
                 document.getElementById("booleanSection").classList.remove("hidden");
             }
@@ -252,8 +262,6 @@
                 document.getElementById("dateSection").classList.remove("hidden");
             } else if (appAttribute === "status") {
                 document.getElementById("statusSection").classList.remove("hidden");
-            } else if (appAttribute === "type") {
-                document.getElementById("applicationTypeSection").classList.remove("hidden");
             }
         }
 
@@ -286,14 +294,11 @@
         function resetApplicationConditionals() {
             document.getElementById("dateSection").classList.add("hidden");
             document.getElementById("statusSection").classList.add("hidden");
-            document.getElementById("applicationTypeSection").classList.add("hidden");
 
             document.querySelectorAll("#dateSection input, #dateSection select")
                 .forEach(el => el.value = "");
             document.querySelectorAll("#statusSection select")
                 .forEach(el => el.value = "pending");
-            document.querySelectorAll("#applicationTypeSection select")
-                .forEach(el => el.value = "all");
         }
 
         function resetPermitConditionals() {
@@ -343,15 +348,12 @@
         function resetAttributeConditionals() {
             document.getElementById("textSection").classList.add("hidden");
             document.getElementById("dateSection").classList.add("hidden");
-            document.getElementById("numberSection").classList.add("hidden");
             document.getElementById("booleanSection").classList.add("hidden");
 
             // reset inputs inside them
             document.querySelectorAll("#dateSection input, #dateSection select")
                 .forEach(el => el.value = "");
             document.querySelectorAll("#textSection input")
-                .forEach(el => el.value = "");
-            document.querySelectorAll("#numberSection input")
                 .forEach(el => el.value = "");
             document.querySelectorAll("#booleanSection select")
                 .forEach(el => el.value = "true");

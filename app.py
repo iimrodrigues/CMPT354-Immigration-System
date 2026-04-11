@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request
 from db import get_connection
-from query_builders import permit, visa, noncitizen, bordercrossing, application
+from query_builders import application, bordercrossing, noncitizen, permit, visa
 
 app = Flask(__name__)
 
@@ -54,12 +54,12 @@ def select():
 @app.route("/visa/query", methods=["GET", "POST"])
 def visa_query():
     if request.method == "POST":
-        sql = visa.get_visa_query(request.form)
+        (sql, params) = visa.get_visa_query(request.form)
         
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
 
-        cursor.execute(sql)
+        cursor.execute(sql, params)
         results = cursor.fetchall()
         return render_template("visa/query.html", results=results)
         
@@ -114,12 +114,12 @@ def visa_add():
 @app.route("/permit/query", methods=["GET", "POST"])
 def permit_query():
     if request.method == "POST":
-        sql = permit.get_permit_query(request.form)
+        (sql, params) = permit.get_permit_query(request.form)
         
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
 
-        cursor.execute(sql)
+        cursor.execute(sql, params)
         results = cursor.fetchall()
         return render_template("permit/query.html", results=results)
     
@@ -172,7 +172,17 @@ def permit_add():
 ## APPLICATION ACTIONS
 @app.route("/application/query", methods=["GET", "POST"])
 def application_query():
-    return render_template("application/query.html")
+    if request.method == "POST":
+        (sql, params) = application.get_application_query(request.form)
+            
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+    
+        cursor.execute(sql, params)
+        results = cursor.fetchall()
+        return render_template("application/query.html", results=results)
+        
+    return render_template("application/query.html", results=None)
 
 @app.route("/application/remove", methods=["GET", "POST"])
 def application_remove():
@@ -199,7 +209,17 @@ def application_add():
 ## BORDER CROSSING ACTIONS
 @app.route("/bordercrossing/query", methods=["GET", "POST"])
 def bordercrossing_query():
-    return render_template("bordercrossing/query.html")
+    if request.method == "POST":
+        (sql, params) = bordercrossing.get_bordercrossing_query(request.form)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql, params)
+        results = cursor.fetchall()
+        return render_template("bordercrossing/query.html", results=results)
+    
+    return render_template("bordercrossing/query.html", results=None)
 
 @app.route("/bordercrossing/remove", methods=["GET", "POST"])
 def bordercrossing_remove():
@@ -226,7 +246,17 @@ def bordercrossing_add():
 ## NON-CITIZEN ACTIONS
 @app.route("/noncitizen/query", methods=["GET", "POST"])
 def noncitizen_query():
-    return render_template("noncitizen/query.html")
+    if request.method == "POST":
+        (sql, params) = noncitizen.get_noncitizen_query(request.form)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql, params)
+        results = cursor.fetchall()
+        return render_template("noncitizen/query.html", results=results)
+    
+    return render_template("noncitizen/query.html", results=None)
 
 @app.route("/noncitizen/remove", methods=["GET", "POST"])
 def noncitizen_remove():
