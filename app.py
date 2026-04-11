@@ -160,20 +160,6 @@ def visa_add():
     return render_template("visa/add.html", results=None)
 
 ## PERMIT ACTIONS
-@app.route("/permit/remove", methods=["GET", "POST"])
-def permit_remove():
-    if request.method == "POST":
-        sql = permit.permit_remove(request.form)
-        
-        conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
-
-        cursor.execute(sql)
-        results = cursor.fetchall()
-        if(results): return render_template("permit/remove.html", results=results)
-    
-    return render_template("permit/remove.html", results=None)
-
 @app.route('/permit/update', methods=['GET', 'POST'])
 def permit_update():
     if request.method == 'POST':
@@ -221,20 +207,6 @@ def permit_update():
         )
 
     return render_template('permit/update.html', results=None)
-
-app.route("/permit/add", methods=["GET", "POST"])
-def permit_add():
-    if request.method == "POST":
-        sql = permit.permit_add(request.form)
-        
-        conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
-
-        cursor.execute(sql)
-        results = cursor.fetchall()
-        if(results): return render_template("permit/add.html", results=results)
-    
-    return render_template("permit/add.html", results=None)
 
 @app.route("/permit/remove", methods=["GET", "POST"])
 def permit_remove():
@@ -429,33 +401,6 @@ def bordercrossing_update():
 
     return render_template('bordercrossing/update.html', results=None)
 
-@app.route("/bordercrossing/remove", methods=["GET", "POST"])
-def bordercrossing_remove():
-    if request.method == "POST":
-        sql = bordercrossing.bordercrossing_remove(request.form)
-        
-        conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
-
-        cursor.execute(sql)
-        results = cursor.fetchall()
-        if(results): return render_template("bordercrossing/remove.html", results=results)
-    
-    return render_template("bordercrossing/remove.html", results=None)
-
-@app.route("/bordercrossing/add", methods=["GET", "POST"])
-def bordercrossing_add():
-    if request.method == "POST":
-        sql = bordercrossing.bordercrossing_add(request.form)
-        
-        conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
-
-        cursor.execute(sql)
-        results = cursor.fetchall()
-        if(results): return render_template("bordercrossing/add.html", results=results)
-    
-    return render_template("bordercrossing/add.html", results=None)
 
 ## NON-CITIZEN ACTIONS
 @app.route("/noncitizen/query", methods=["GET", "POST"])
@@ -530,34 +475,6 @@ def noncitizen_update():
         )
 
     return render_template('noncitizen/update.html', results=None)
-
-@app.route("/noncitizen/remove", methods=["GET", "POST"])
-def noncitizen_remove():
-    if request.method == "POST":
-        sql = noncitizen.noncitizen_remove(request.form)
-        
-        conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
-
-        cursor.execute(sql)
-        results = cursor.fetchall()
-        if(results): return render_template("noncitizen/remove.html", results=results)
-    
-    return render_template("noncitizen/remove.html", results=None)
-
-@app.route("/noncitizen/add", methods=["GET", "POST"])
-def noncitizen_add():
-    if request.method == "POST":
-        sql = noncitizen.noncitizen_add(request.form)
-        
-        conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
-
-        cursor.execute(sql)
-        results = cursor.fetchall()
-        if(results): return render_template("noncitizen/add.html", results=results)
-    
-    return render_template("noncitizen/add.html", results=None)
 
 if __name__ == "__main__":
     app.run(debug=True)
