@@ -70,7 +70,6 @@ def visa_add(form):
     issueDate = form.get("issueDate")
     expiryDate = form.get("expiryDate")
     stayStatus = form.get("stayStatus")
-    type = form.get("visaType")
 
     if(not passportID): return "--"
     if(not visaID): return "--"
@@ -78,32 +77,9 @@ def visa_add(form):
     if(not issueDate): return "--"
     if(not expiryDate): return "--"
 
-    if(type == "All"):
-        return f"""
-                START TRANSACTION;
-                INSERT INTO Visa (PassportID, VisaID, IssueDate, ExpiryDate, StayStatus, ApplicationID)
-                VALUES ('{passportID}', '{visaID}', '{issueDate}', '{expiryDate}', '{stayStatus}', {applicationID});
-                INSERT INTO TransitVisa (PassportID, VisaID)
-                VALUES ('{passportID}', '{visaID}');
-                INSERT INTO VisitorVisa (PassportID, VisaID)
-                VALUES ('{passportID}', '{visaID}');
-                COMMIT;
-                """
-    elif(type == "Transit Visa"):
-        return f"""
-                START TRANSACTION;
-                INSERT INTO Visa (PassportID, VisaID, IssueDate, ExpiryDate, StayStatus, ApplicationID)
-                VALUES ('{passportID}', '{visaID}', '{issueDate}', '{expiryDate}', '{stayStatus}', {applicationID});
-                INSERT INTO TransitVisa (PassportID, VisaID)
-                VALUES ('{passportID}', '{visaID}');
-                COMMIT;
-                """
-    elif(type == "Visitor Visa"):
-        return f"""
-                START TRANSACTION;
-                INSERT INTO Visa (PassportID, VisaID, IssueDate, ExpiryDate, StayStatus, ApplicationID)
-                VALUES ('{passportID}', '{visaID}', '{issueDate}', '{expiryDate}', '{stayStatus}', {applicationID});
-                INSERT INTO VisitorVisa (PassportID, VisaID)
-                VALUES ('{passportID}', '{visaID}');
-                COMMIT;
-                """
+    return f"""
+            START TRANSACTION;
+            INSERT INTO Visa (PassportID, VisaID, IssueDate, ExpiryDate, StayStatus, ApplicationID)
+            VALUES ('{passportID}', '{visaID}', '{issueDate}', '{expiryDate}', '{stayStatus}', {applicationID});
+            COMMIT;
+            """

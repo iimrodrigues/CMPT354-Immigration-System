@@ -74,8 +74,6 @@ def visa_remove():
         cursor = conn.cursor(dictionary=True)
 
         cursor.execute(sql)
-        results = cursor.fetchall()
-        if(results): return render_template("visa/remove.html", results=results)
         
     return render_template("visa/remove.html", results=None)
 
@@ -86,10 +84,29 @@ def visa_add():
         
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
-
         cursor.execute(sql)
-        results = cursor.fetchall()
-        if(results): return render_template("visa/add.html", results=results)
+
+        type = request.form.get("visaType")
+        id = request.form.get("visaID")
+
+        if(type == "Transit Visa"):
+            sql = f"""
+                    START TRANSACTION;
+                    DELETE from VisitorVisa WHERE VisaID = '{id}';
+                    COMMIT;
+                    """
+        elif(type == "Visitor Visa"):
+            sql = f"""
+                    START TRANSACTION;
+                    DELETE from TransitVisa WHERE VisaID = '{id}';
+                    COMMIT;
+                    """
+        else:
+            sql = "--"
+
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute(sql)
         
     return render_template("visa/add.html", results=None)
 
@@ -115,10 +132,7 @@ def permit_remove():
         
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
-
         cursor.execute(sql)
-        results = cursor.fetchall()
-        if(results): return render_template("permit/remove.html", results=results)
     
     return render_template("permit/remove.html", results=None)
 
@@ -129,10 +143,29 @@ def permit_add():
         
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
-
         cursor.execute(sql)
-        results = cursor.fetchall()
-        if(results): return render_template("permit/add.html", results=results)
+
+        type = request.form.get("permitType")
+        id = request.form.get("permitID")
+
+        if(type == "Study Permit"):
+            sql = f"""
+                    START TRANSACTION;
+                    DELETE from WorkPermit WHERE PermitID = '{id}';
+                    COMMIT;
+                    """
+        elif(type == "Work Permit"):
+            sql = f"""
+                    START TRANSACTION;
+                    DELETE from StudyPermit WHERE PermitID = '{id}';
+                    COMMIT;
+                    """
+        else:
+            sql = "--"
+
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute(sql)
     
     return render_template("permit/add.html", results=None)
 
@@ -148,10 +181,7 @@ def application_remove():
         
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
-
         cursor.execute(sql)
-        results = cursor.fetchall()
-        if(results): return render_template("application/remove.html", results=results)
     
     return render_template("application/remove.html", results=None)
 
@@ -162,10 +192,7 @@ def application_add():
         
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
-
         cursor.execute(sql)
-        results = cursor.fetchall()
-        if(results): return render_template("application/add.html", results=results)
     
     return render_template("application/add.html", results=None)
 
@@ -181,10 +208,7 @@ def bordercrossing_remove():
         
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
-
         cursor.execute(sql)
-        results = cursor.fetchall()
-        if(results): return render_template("bordercrossing/remove.html", results=results)
     
     return render_template("bordercrossing/remove.html", results=None)
 
@@ -195,10 +219,7 @@ def bordercrossing_add():
         
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
-
         cursor.execute(sql)
-        results = cursor.fetchall()
-        if(results): return render_template("bordercrossing/add.html", results=results)
     
     return render_template("bordercrossing/add.html", results=None)
 
@@ -214,10 +235,7 @@ def noncitizen_remove():
         
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
-
         cursor.execute(sql)
-        results = cursor.fetchall()
-        if(results): return render_template("noncitizen/remove.html", results=results)
     
     return render_template("noncitizen/remove.html", results=None)
 
@@ -228,10 +246,7 @@ def noncitizen_add():
         
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
-
         cursor.execute(sql)
-        results = cursor.fetchall()
-        if(results): return render_template("noncitizen/add.html", results=results)
     
     return render_template("noncitizen/add.html", results=None)
 

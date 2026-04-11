@@ -66,13 +66,13 @@ CREATE TABLE TransitVisa (
     PassportID CHAR(8),
     VisaID CHAR(8),
     PRIMARY KEY(PassportID, VisaID),
-    FOREIGN KEY(PassportID) REFERENCES Visa(PassportID) ON DELETE CASCADE);
+    FOREIGN KEY(PassportID, VisaID) REFERENCES Visa(PassportID, VisaID) ON DELETE CASCADE);
 
 CREATE TABLE VisitorVisa (
     PassportID CHAR(8),
     VisaID CHAR(8),
     PRIMARY KEY(PassportID, VisaID),
-    FOREIGN KEY(PassportID) REFERENCES Visa(PassportID) ON DELETE CASCADE);
+    FOREIGN KEY(PassportID, VisaID) REFERENCES Visa(PassportID, VisaID) ON DELETE CASCADE);
 
 CREATE TABLE Permit (
     PassportID CHAR(8),
@@ -88,10 +88,10 @@ CREATE TABLE StudyPermit (
     PassportID CHAR(8),
     PermitID CHAR(10),
     PRIMARY KEY(PassportID, PermitID),
-    FOREIGN KEY(PassportID) REFERENCES Permit(PassportID) ON DELETE CASCADE);
+    FOREIGN KEY(PassportID, PermitID) REFERENCES Permit(PassportID, PermitID) ON DELETE CASCADE);
 
 CREATE TABLE WorkPermit (
     PassportID CHAR(8),
     PermitID CHAR(10),
     PRIMARY KEY(PassportID, PermitID),
-    FOREIGN KEY(PassportID) REFERENCES Permit(PassportID) ON DELETE CASCADE);
+    FOREIGN KEY(PassportID, PermitID) REFERENCES Permit(PassportID, PermitID) ON DELETE CASCADE);
