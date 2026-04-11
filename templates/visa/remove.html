@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Visa Remove</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Visa Remove</h2>
+
+        <form method="POST">
+
+            <div class="row">
+                <div style="display:flex; align-items:center; padding:0 10px;">
+                    <strong>Visa ID</strong>
+                </div>
+            </div>
+
+            <!-- ID INPUT -->
+            <div id="idSection">
+                <input type="text" id="visaID" name="visaID" placeholder="Enter 8-character Visa ID" maxlength="8">
+            </div>
+                    
+            <br></br>
+            <button type="submit">Remove</button>
+
+        </form>
+
+        <br></br>
+        <button onclick="window.location.href='..'">Back to Home Page</button>
+
+    </div>
+
+</body>
+
+</html>

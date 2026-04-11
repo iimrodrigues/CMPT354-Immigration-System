@@ -1,6 +1,3 @@
-import re
-
-
 def get_visa_query(form):
     action = form.get("action")
     field = form.get("field")

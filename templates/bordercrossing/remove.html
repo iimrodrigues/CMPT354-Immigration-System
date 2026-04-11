@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Border Crossing Remove</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Border Crossing Remove</h2>
+
+        <form method="POST">
+
+            <div class="row">
+            <section>
+
+                <!-- Date INPUT -->
+                <label for="date">Crossing Date</label>
+                <input type="date" id="date" name="date">
+
+                <!-- Time INPUT -->
+                <label for="time">Crossing Time</label>
+                <input type="time" id="time" name="time">
+
+            </section>
+            </div>
+
+            <button type="submit">Remove</button>
+
+        </form>
+
+        <br></br>
+        <button onclick="window.location.href='..'">Back to Home Page</button>
+    </div>
+
+</body>
+
+</html>
