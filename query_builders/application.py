@@ -1,5 +1,21 @@
 def application_remove(form):
-    return "--"
+    applicationID = form.get("applicationID")  
+
+    if(not applicationID): return "--" 
+
+    return f"""
+            START TRANSACTION;
+            DELETE FROM StudyPermit WHERE PassportID = (SELECT PassportID FROM Permit WHERE ApplicationID = {applicationID});
+            DELETE FROM WorkPermit WHERE PassportID = (SELECT PassportID FROM Permit WHERE ApplicationID = {applicationID});
+            DELETE FROM Permit WHERE ApplicationID = {applicationID};
+            DELETE FROM TransitVisa WHERE PassportID = (SELECT PassportID FROM Visa WHERE ApplicationID = {applicationID});
+            DELETE FROM VisitorVisa WHERE PassportID = (SELECT PassportID FROM Visa WHERE ApplicationID = {applicationID});
+            DELETE FROM Visa WHERE ApplicationID = {applicationID};
+            DELETE FROM SUBMITS WHERE ApplicationID = {applicationID};
+            DELETE FROM SupportingDocuments WHERE ApplicationID = {applicationID};
+            DELETE FROM Application WHERE ApplicationID = {applicationID};
+            COMMIT;
+            """
 
 def application_add(form):
     applicationID = form.get("applicationID")  

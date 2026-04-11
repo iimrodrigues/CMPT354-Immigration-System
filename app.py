@@ -141,7 +141,21 @@ def permit_add():
 def application_query():
     return render_template("application/query.html")
 
-@app.route("/noncitizen/add", methods=["GET", "POST"])
+@app.route("/application/remove", methods=["GET", "POST"])
+def application_remove():
+    if request.method == "POST":
+        sql = application.application_remove(request.form)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        if(results): return render_template("application/remove.html", results=results)
+    
+    return render_template("application/remove.html", results=None)
+
+@app.route("/application/add", methods=["GET", "POST"])
 def application_add():
     if request.method == "POST":
         sql = application.application_add(request.form)
@@ -159,6 +173,20 @@ def application_add():
 @app.route("/bordercrossing/query", methods=["GET", "POST"])
 def bordercrossing_query():
     return render_template("bordercrossing/query.html")
+
+@app.route("/bordercrossing/remove", methods=["GET", "POST"])
+def bordercrossing_remove():
+    if request.method == "POST":
+        sql = bordercrossing.bordercrossing_remove(request.form)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        if(results): return render_template("bordercrossing/remove.html", results=results)
+    
+    return render_template("bordercrossing/remove.html", results=None)
 
 @app.route("/bordercrossing/add", methods=["GET", "POST"])
 def bordercrossing_add():
@@ -178,6 +206,20 @@ def bordercrossing_add():
 @app.route("/noncitizen/query", methods=["GET", "POST"])
 def noncitizen_query():
     return render_template("noncitizen/query.html")
+
+@app.route("/noncitizen/remove", methods=["GET", "POST"])
+def noncitizen_remove():
+    if request.method == "POST":
+        sql = noncitizen.noncitizen_remove(request.form)
+        
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        if(results): return render_template("noncitizen/remove.html", results=results)
+    
+    return render_template("noncitizen/remove.html", results=None)
 
 @app.route("/noncitizen/add", methods=["GET", "POST"])
 def noncitizen_add():
