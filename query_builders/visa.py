@@ -3,7 +3,7 @@ def update_query(form):
     passport_id = form.get("passportID")
     visa_id = form.get("visaID")
     date_value = form.get("dateValue")
-    text_value = form.get("textValue")
+    stay_value = form.get("stayStatus")
 
     if not passport_id or not visa_id or not field or field == "none":
         return None, None, "Please fill in all fields."
@@ -20,7 +20,7 @@ def update_query(form):
     sql_field = field_map[field]
 
     # Decide value type
-    value = date_value if field in ["IssueDate", "ExpiryDate"] else text_value
+    value = date_value if field in ["IssueDate", "ExpiryDate"] else stay_value
 
     if not value:
         return None, None, "Please provide a value."

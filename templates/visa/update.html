@@ -57,8 +57,12 @@
                     <input type="date" name="dateValue">
                 </div>
 
-                <div id="textSection" class="hidden">
-                    <input type="text" name="textValue" placeholder="Enter status">
+                <div id="staySection" class="hidden">
+                    <select name="stayStatus">
+                        <option value="Valid">Valid</option>
+                        <option value="Expired">Expired</option>
+                        <option value="Revoked">Revoked</option>
+                    </select>
                 </div>
             </div>
 
@@ -101,14 +105,14 @@
         const field = document.getElementById("fieldSelect").value;
 
         document.getElementById("dateSection").classList.add("hidden");
-        document.getElementById("textSection").classList.add("hidden");
+        document.getElementById("staySection").classList.add("hidden");
 
         if (field === "IssueDate" || field === "ExpiryDate") {
             document.getElementById("dateSection").classList.remove("hidden");
         }
 
         if (field === "StayStatus") {
-            document.getElementById("textSection").classList.remove("hidden");
+            document.getElementById("staySection").classList.remove("hidden");
         }
         }
     </script>

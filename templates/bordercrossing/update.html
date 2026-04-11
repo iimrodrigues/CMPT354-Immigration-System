@@ -46,6 +46,13 @@
             <div id="textSection" class="hidden">
                 <input type="text" name="value">
             </div>
+
+            <div id="crossingTypeSection" class="hidden">
+                <select name="crossingType">
+                    <option value="Entry">Entry</option>
+                    <option value="Exit">Exit</option>
+                </select>
+            </div>
         </div>
 
         <button type="submit">Update</button>
@@ -59,7 +66,15 @@
 
 <script>
 function onFieldChange() {
-    document.getElementById("textSection").classList.remove("hidden");
+    const field = document.getElementById("fieldSelect").value
+
+    document.getElementById("textSection").classList.add("hidden");
+    document.getElementById("crossingTypeSection").classList.add("hidden");
+
+    if (field == "EntryOrExit")
+        document.getElementById("crossingTypeSection").classList.remove("hidden");
+    else
+        document.getElementById("textSection").classList.remove("hidden");
 }
 </script>
 

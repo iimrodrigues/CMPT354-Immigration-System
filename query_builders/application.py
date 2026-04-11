@@ -74,7 +74,7 @@ def get_application_query(form):
             
 def update_query(form):
     application_id = form.get("applicationID")
-    status_value = form.get("statusValue")
+    status_value = form.get("appStatus")
 
     if not application_id or not status_value:
         return None, None, "Please fill in all fields."

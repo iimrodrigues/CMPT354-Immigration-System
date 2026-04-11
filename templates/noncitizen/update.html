@@ -46,6 +46,13 @@
             <div id="textSection" class="hidden">
                 <input type="text" name="value">
             </div>
+
+            <div id="booleanSection" class="hidden section">
+                    <select name="booleanValue">
+                        <option value="1">True</option>
+                        <option value="0">False</option>
+                    </select>
+                </div>
         </div>
 
         <button type="submit">Update</button>
@@ -59,7 +66,15 @@
 
 <script>
 function onFieldChange() {
-    document.getElementById("textSection").classList.remove("hidden");
+    const field = document.getElementById("fieldSelect").value
+
+    document.getElementById("booleanSection").classList.add("hidden");
+    document.getElementById("textSection").classList.add("hidden");
+
+    if (field == "HasCriminalRecord")
+        document.getElementById("booleanSection").classList.remove("hidden");
+    else
+        document.getElementById("textSection").classList.remove("hidden");
 }
 </script>
 

@@ -2,6 +2,7 @@ def update_query(form):
     field = form.get("field")
     passport_id = form.get("passportID")
     value = form.get("value")
+    booleanValue = form.get("booleanValue")
 
     if not passport_id or not field or field == "none":
         return None, None, "Please fill in all fields."
@@ -23,17 +24,20 @@ def update_query(form):
 
     sql_field = field_map[field]
 
-    if not value:
-        return None, None, "Please provide a value."
+    if sql_field == "HasCriminalRecord":
+        if booleanValue is None:
+            return None, None, "Please select an option."
+        params = (booleanValue, passport_id)
+    else:
+        if not value:
+            return None, None, "Please provide a value."
+        params = (value, passport_id)
 
     query = f"""
         UPDATE NonCitizen
         SET {sql_field} = %s
         WHERE PassportID = %s
     """
-
-    params = (value, passport_id)
-
     return query, params, None
 
 def get_noncitizen_query(form):

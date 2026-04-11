@@ -3,6 +3,7 @@ def update_query(form):
     date = form.get("date")
     time = form.get("time")
     value = form.get("value")
+    crossingTypeValue = form.get("crossingType")
 
     if not date or not time or not field or field == "none":
         return None, None, "Please fill in all fields."
@@ -18,6 +19,9 @@ def update_query(form):
         return None, None, "Invalid field selected."
 
     sql_field = field_map[field]
+
+    if sql_field == "EntryOrExit":
+        value = crossingTypeValue
 
     if not value:
         return None, None, "Please provide a value."
