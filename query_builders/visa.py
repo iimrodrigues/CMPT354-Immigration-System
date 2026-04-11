@@ -1,5 +1,3 @@
-import re
-
 def update_query(form):
     field = form.get("field")
     passport_id = form.get("passportID")

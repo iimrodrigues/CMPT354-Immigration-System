@@ -18,7 +18,7 @@
             <section>
 
                 <!-- Passport ID INPUT -->
-                <label for="passportId">Passport ID</label>
+                <label for="passportID">Passport ID</label>
                 <input type="text" id="passportID" name="passportID" placeholder="Existing 8-character Passport ID" maxlength="8">
 
                 <!-- Visa ID INPUT -->
@@ -60,34 +60,10 @@
 
         </form>
 
-    <div class="table-container">
-        {% if results is not none %}
+        <br></br>
+        <button onclick="window.location.href='..'">Back to Home Page</button>
 
-        <table class="result-table">
-
-            <thead>
-                <tr>
-                    {% for key in results[0].keys() %}
-                    <th>{{ key }}</th>
-                    {% endfor %}
-                </tr>
-            </thead>
-
-            <tbody>
-                {% for row in results %}
-                <tr>
-                    {% for value in row.values() %}
-                    <td>{{ value }}</td>
-                    {% endfor %}
-                </tr>
-                {% endfor %}
-            </tbody>
-
-        </table>
-
-        {% endif %}
     </div>
-</div>
 
 </body>
 

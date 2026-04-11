@@ -21,7 +21,19 @@
                 <label for="applicationID">Application ID</label>
                 <input type="number" id="applicationID" name="applicationID" placeholder="New Application ID Number">
 
-                <!-- Permit TYPE FILTER -->
+                <!-- Passport ID INPUT -->
+                <label for="passportId">Passport ID</label>
+                <input type="text" id="passportID" name="passportID" placeholder="Existing 8-character Passport ID" maxlength="8">
+
+                <!-- Date INPUT -->
+                <label for="submissionDate">Submission Date</label>
+                <input type="date" id="submissionDate" name="submissionDate">
+
+                <!-- Document Number INPUT --> 
+                <label for="document">Supporting Document</label>
+                <input type="number" id="document" name="document" placeholder="Supporting Document Number">                
+
+                <!-- status Select -->
                 <label for="status">Application Status</label>
                 <select id="status" name="status">
                     <option>- Select Application Status -</option>
@@ -34,9 +46,12 @@
             </section>
             </div>
 
-            <button type="submit">Remove</button>
+            <button type="submit">Add</button>
 
         </form>
+
+        <br></br>
+        <button onclick="window.location.href='..'">Back to Home Page</button>
 
     </div>
 

@@ -20,7 +20,7 @@
                 <br></br>
 
                 <!-- Passport ID INPUT -->
-                <label for="passportId">Passport ID</label>
+                <label for="passportID">Passport ID</label>
                 <input type="text" id="passportID" name="passportID" placeholder="8-character Passport ID" maxlength="8">
 
                 <!-- First Name INPUT -->
@@ -85,6 +85,7 @@
             <!-- Permit TYPE FILTER -->
                 <label for="criminalRecord">Criminal Record</label>
                 <select id="criminalRecord" name="criminalRecord">
+                    <option>- Select Yes/No -</option>
                     <option>No</option>
                     <option>Yes</option>
                 </select>
@@ -94,6 +95,9 @@
             <button type="submit">Add</button>
 
         </form>
+
+        <br></br>
+        <button onclick="window.location.href='..'">Back to Home Page</button>
 
     </div>
 

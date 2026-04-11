@@ -14,7 +14,8 @@ VALUES
 ('2016-08-03', '09:30:00', 'Toronto', 'Ontario', 'M5H 3K7', 'Exit'),
 ('2017-02-20', '14:45:00', 'Calgary', 'Alberta', 'T3J 4S8', 'Entry'),
 ('2018-03-05', '11:20:00', 'Montreal', 'Quebec', 'H2X 1Y2', 'Exit'),
-('2019-11-18', '16:05:00', 'Halifax', 'Nova Scotia', 'B4C 1L9', 'Entry');
+('2019-11-18', '16:05:00', 'Halifax', 'Nova Scotia', 'B4C 1L9', 'Entry'),
+('2020-03-11', '15:25:00', 'Surrey', 'British Columbia', 'V3S 4L5', 'Exit');
 
 INSERT INTO Application
 (ApplicationID, Status)
@@ -41,7 +42,8 @@ VALUES
 ('2016-08-03', '09:30:00', 'CD234567'),
 ('2017-02-20', '14:45:00', 'EF345678'),
 ('2018-03-05', '11:20:00', 'GH456789'),
-('2019-11-18', '16:05:00', 'IJ567890');
+('2019-11-18', '16:05:00', 'IJ567890'),
+('2020-03-11', '15:25:00', 'AB123456');
 
 INSERT INTO SUBMITS
 (ApplicationID, PassportID, SubmissionDate)
@@ -115,3 +117,27 @@ VALUES
 ('EF345678', 'W890123456'),
 ('GH456789', 'W901234567'),
 ('IJ567890', 'W012345678');
+
+DELIMITER $$
+
+CREATE TRIGGER add_transit_and_visitor_visa
+AFTER INSERT ON Visa
+FOR EACH ROW
+BEGIN
+    INSERT INTO TransitVisa (PassportID, VisaID)
+    VALUES (NEW.PassportID, NEW.VisaID);
+    INSERT INTO VisitorVisa (PassportID, VisaID)
+    VALUES (NEW.PassportID, NEW.VisaID);
+END$$
+
+CREATE TRIGGER add_work_and_study_permit
+AFTER INSERT ON Permit
+FOR EACH ROW
+BEGIN
+    INSERT INTO WorkPermit (PassportID, PermitID)
+    VALUES (NEW.PassportID, NEW.PermitID);
+    INSERT INTO StudyPermit (PassportID, PermitID)
+    VALUES (NEW.PassportID, NEW.PermitID);
+END$$
+
+DELIMITER ;
