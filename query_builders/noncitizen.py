@@ -295,18 +295,6 @@ def get_noncitizen_query(form):
                     WHERE BorderCrossing.EntryOrExit = 'Entry'
                     GROUP BY NonCitizen.PassportID;""", ()
         
-        if borderOptions == "hasNotEntered":
-            if selection == "*":
-                selection = "NonCitizen.*"
-
-            return f"""SELECT {selection}
-                    FROM NonCitizen
-                    WHERE NOT EXISTS (
-                        SELECT 1
-                        FROM CROSSES
-                        JOIN BorderCrossing ON CROSSES.CrossingDate = BorderCrossing.Date AND CROSSES.CrossingTime = BorderCrossing.Time
-                        WHERE CROSSES.PassportID = NonCitizen.PassportID AND BorderCrossing.EntryOrExit = 'Entry');""", ()
-        
         if borderOptions == "hasExited":
             if selection == "*":
                 selection = "NonCitizen.*, COUNT(*) AS EntryCount"
@@ -318,15 +306,25 @@ def get_noncitizen_query(form):
                     WHERE BorderCrossing.EntryOrExit = 'Exit'
                     GROUP BY NonCitizen.PassportID;""", ()
         
-        if borderOptions == "hasNotExited":
-            if selection == "*":
-                selection = "NonCitizen.*"
+        if borderOptions == "allCrossingTypes":
 
-            return f"""SELECT {selection}
-                    FROM NonCitizen
-                    WHERE NOT EXISTS (
-                        SELECT 1
-                        FROM CROSSES
-                        JOIN BorderCrossing ON CROSSES.CrossingDate = BorderCrossing.Date AND CROSSES.CrossingTime = BorderCrossing.Time
-                        WHERE CROSSES.PassportID = NonCitizen.PassportID AND BorderCrossing.EntryOrExit = 'Exit');""", ()
+            return f"""SELECT DISTINCT NonCitizensWithAllCrossingTypes.*
+                    FROM (
+                        SELECT NonCitizen.*
+                        FROM NonCitizen
+                        WHERE NOT EXISTS (
+                            SELECT CrossingTypes.EntryOrExit
+                            FROM (
+                                SELECT BorderCrossing.EntryOrExit
+                                FROM BorderCrossing
+                                GROUP BY BorderCrossing.EntryOrExit
+                                ) CrossingTypes
+                            WHERE NOT EXISTS (
+                                SELECT 1
+                                FROM CROSSES
+                                JOIN BorderCrossing ON BorderCrossing.Date = CROSSES.CrossingDate AND BorderCrossing.Time = CROSSES.CrossingTime
+                                WHERE NonCitizen.PassportID = CROSSES.PassportID AND BorderCrossing.EntryOrExit = CrossingTypes.EntryOrExit
+                                )
+                            )
+                        ) NonCitizensWithAllCrossingTypes;""", ()
     
