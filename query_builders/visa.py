@@ -58,9 +58,7 @@ def visa_remove(form):
     if(not id): return "--"
 
     return f"""
-            START TRANSACTION;
-            DELETE from TransitVisa WHERE PassportID = (SELECT PassportID FROM Visa WHERE VisaID = '{id}');
-            DELETE from VisitorVisa WHERE PassportID = (SELECT PassportID FROM Visa WHERE VisaID = '{id}');            
+            START TRANSACTION;         
             DELETE from Visa WHERE VisaID = '{id}';
             COMMIT;
             """

@@ -33,23 +33,23 @@ CREATE TABLE SupportingDocuments (
 	ApplicationID INT,
     DocumentNumber INT,
     PRIMARY KEY(ApplicationID, DocumentNumber),
-    FOREIGN KEY(ApplicationID) REFERENCES Application(ApplicationID));
+    FOREIGN KEY(ApplicationID) REFERENCES Application(ApplicationID) ON DELETE CASCADE);
     
 CREATE TABLE CROSSES (
 	CrossingDate DATE,
     CrossingTime TIME,
     PassportID CHAR(8),
     PRIMARY KEY(CrossingDate, CrossingTime, PassportID),
-    FOREIGN KEY(CrossingDate, CrossingTime) REFERENCES BorderCrossing(Date, Time),
-    FOREIGN KEY(PassportID) REFERENCES NonCitizen(PassportID));
+    FOREIGN KEY(CrossingDate, CrossingTime) REFERENCES BorderCrossing(Date, Time) ON DELETE CASCADE,
+    FOREIGN KEY(PassportID) REFERENCES NonCitizen(PassportID) ON DELETE CASCADE);
     
 CREATE TABLE SUBMITS (
 	ApplicationID INT,
     PassportID CHAR(8),
     SubmissionDate DATE,
     PRIMARY KEY(ApplicationID, PassportID),
-    FOREIGN KEY(ApplicationID) REFERENCES Application(ApplicationID),
-    FOREIGN KEY(PassportID) REFERENCES NonCitizen(PassportID));
+    FOREIGN KEY(ApplicationID) REFERENCES Application(ApplicationID) ON DELETE CASCADE,
+    FOREIGN KEY(PassportID) REFERENCES NonCitizen(PassportID) ON DELETE CASCADE);
 
 CREATE TABLE Visa (
     PassportID CHAR(8),
@@ -59,20 +59,20 @@ CREATE TABLE Visa (
     StayStatus VARCHAR(25), 
     ApplicationID INT,
     PRIMARY KEY(PassportID, VisaID),
-    FOREIGN KEY(PassportID) REFERENCES NonCitizen(PassportID),
-    FOREIGN KEY(ApplicationID) REFERENCES Application(ApplicationID));
+    FOREIGN KEY(PassportID) REFERENCES NonCitizen(PassportID) ON DELETE CASCADE,
+    FOREIGN KEY(ApplicationID) REFERENCES Application(ApplicationID) ON DELETE CASCADE);
 
 CREATE TABLE TransitVisa (
     PassportID CHAR(8),
     VisaID CHAR(8),
     PRIMARY KEY(PassportID, VisaID),
-    FOREIGN KEY(PassportID) REFERENCES Visa(PassportID));
+    FOREIGN KEY(PassportID) REFERENCES Visa(PassportID) ON DELETE CASCADE);
 
 CREATE TABLE VisitorVisa (
     PassportID CHAR(8),
     VisaID CHAR(8),
     PRIMARY KEY(PassportID, VisaID),
-    FOREIGN KEY(PassportID) REFERENCES Visa(PassportID));
+    FOREIGN KEY(PassportID) REFERENCES Visa(PassportID) ON DELETE CASCADE);
 
 CREATE TABLE Permit (
     PassportID CHAR(8),
@@ -81,17 +81,17 @@ CREATE TABLE Permit (
     ExpiryDate DATE,
     ApplicationID INT,
     PRIMARY KEY(PassportID, PermitID),
-    FOREIGN KEY(PassportID) REFERENCES NonCitizen(PassportID),
-    FOREIGN KEY(ApplicationID) REFERENCES Application(ApplicationID));
+    FOREIGN KEY(PassportID) REFERENCES NonCitizen(PassportID) ON DELETE CASCADE,
+    FOREIGN KEY(ApplicationID) REFERENCES Application(ApplicationID) ON DELETE CASCADE);
 
 CREATE TABLE StudyPermit (
     PassportID CHAR(8),
     PermitID CHAR(10),
     PRIMARY KEY(PassportID, PermitID),
-    FOREIGN KEY(PassportID) REFERENCES Permit(PassportID));
+    FOREIGN KEY(PassportID) REFERENCES Permit(PassportID) ON DELETE CASCADE);
 
 CREATE TABLE WorkPermit (
     PassportID CHAR(8),
     PermitID CHAR(10),
     PRIMARY KEY(PassportID, PermitID),
-    FOREIGN KEY(PassportID) REFERENCES Permit(PassportID));
+    FOREIGN KEY(PassportID) REFERENCES Permit(PassportID) ON DELETE CASCADE);

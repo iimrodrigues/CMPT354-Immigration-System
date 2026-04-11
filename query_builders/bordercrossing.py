@@ -7,7 +7,6 @@ def bordercrossing_remove(form):
 
     return f"""
             START TRANSACTION;
-            DELETE FROM CROSSES WHERE CrossingDate = '{date}' AND CrossingTime = '{time + ":00"}';
             DELETE FROM BorderCrossing WHERE Date = '{date}' AND Time = '{time + ":00"}';
             COMMIT;
             """

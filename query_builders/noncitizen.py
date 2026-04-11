@@ -5,14 +5,6 @@ def noncitizen_remove(form):
     
     return f"""
             START TRANSACTION;
-            DELETE FROM CROSSES WHERE PassportID = '{passportID}';
-            DELETE FROM SUBMITS WHERE PassportID = '{passportID}';
-            DELETE FROM TransitVisa WHERE PassportID = '{passportID}';
-            DELETE FROM VisitorVisa WHERE PassportID = '{passportID}';
-            DELETE FROM Visa WHERE PassportID = '{passportID}';
-            DELETE FROM StudyPermit WHERE PassportID = '{passportID}';
-            DELETE FROM WorkPermit WHERE PassportID = '{passportID}';
-            DELETE FROM Permit WHERE PassportID = '{passportID}';
             DELETE FROM NonCitizen WHERE PassportID = '{passportID}';
             COMMIT;
             """

@@ -58,9 +58,7 @@ def permit_remove(form):
     if(not id): return "--"
 
     return f"""
-            START TRANSACTION;
-            DELETE from StudyPermit WHERE PassportID = (SELECT PassportID FROM Permit WHERE PermitID = '{id}');
-            DELETE from WorkPermit WHERE PassportID = (SELECT PassportID FROM Permit WHERE PermitID = '{id}');            
+            START TRANSACTION;         
             DELETE from Permit WHERE PermitID = '{id}';
             COMMIT;
             """
