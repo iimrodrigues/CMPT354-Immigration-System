@@ -30,18 +30,6 @@ def application_add(form):
     if(not documentNumber): return "--"
     if(status == "- Select Application Status -"): return "--"
 
-    print(f"""
-            START TRANSACTION;
-            INSERT INTO Application (ApplicationID, Status)
-            VALUES ({applicationID}, '{status}');
-            INSERT INTO SUBMITS (ApplicationID, PassportID, SubmissionDate)
-            VALUES ({applicationID},{passportID},{submissionDate});
-            INSERT INTO SupportingDocuments (ApplicationID, DocumentNumber)
-            VALUES ({applicationID},{documentNumber});
-            COMMIT;
-            """)
-
-
     return f"""
             START TRANSACTION;
             INSERT INTO Application (ApplicationID, Status)
