@@ -56,22 +56,67 @@ def get_bordercrossing_query(form):
         return f"SELECT {selection} FROM BorderCrossing WHERE BorderCrossing.EntryOrExit = %s;", ("Exit",)
     elif field == "nc":
         if ncCondition == "First Name":
-            return f"""SELECT {selection} FROM BorderCrossing 
-                    JOIN NonCitizen ON BorderCrossing.NonCitizenID = NonCitizen.NonCitizenID
-                    WHERE NonCitizen.FirstName = %s;""", (textValue,)
+            if selection == "*":
+                return f"""SELECT BorderCrossing.*, NonCitizen.FirstName
+                        FROM BorderCrossing
+                        JOIN CROSSES ON BorderCrossing.Date = CROSSES.CrossingDate AND BorderCrossing.Time = CROSSES.CrossingTime
+                        JOIN NonCitizen ON CROSSES.PassportID = NonCitizen.PassportID
+                        WHERE NonCitizen.FirstName = %s;""", (textValue,)
+            elif selection == "COUNT(*)":
+                return f"""SELECT COUNT(*) AS Count
+                        FROM BorderCrossing
+                        JOIN CROSSES ON BorderCrossing.Date = CROSSES.CrossingDate AND BorderCrossing.Time = CROSSES.CrossingTime
+                        JOIN NonCitizen ON CROSSES.PassportID = NonCitizen.PassportID
+                        WHERE NonCitizen.FirstName = %s;""", (textValue,)
         elif ncCondition == "Last Name":
-            return f"""SELECT {selection} FROM BorderCrossing 
-                    JOIN NonCitizen ON BorderCrossing.NonCitizenID = NonCitizen.NonCitizenID
+            if selection == "*":
+                return f"""SELECT BorderCrossing.*, NonCitizen.LastName
+                    FROM BorderCrossing
+                    JOIN CROSSES ON BorderCrossing.Date = CROSSES.CrossingDate AND BorderCrossing.Time = CROSSES.CrossingTime
+                    JOIN NonCitizen ON CROSSES.PassportID = NonCitizen.PassportID
+                    WHERE NonCitizen.LastName = %s;""", (textValue,)
+            elif selection == "COUNT(*)":
+                return f"""SELECT COUNT(*) AS Count
+                    FROM BorderCrossing
+                    JOIN CROSSES ON BorderCrossing.Date = CROSSES.CrossingDate AND BorderCrossing.Time = CROSSES.CrossingTime
+                    JOIN NonCitizen ON CROSSES.PassportID = NonCitizen.PassportID
                     WHERE NonCitizen.LastName = %s;""", (textValue,)
         elif ncCondition == "City":
-            return f"""SELECT {selection} FROM BorderCrossing 
-                    JOIN NonCitizen ON BorderCrossing.NonCitizenID = NonCitizen.NonCitizenID
+            if selection == "*":
+                return f"""SELECT BorderCrossing.*, NonCitizen.City
+                    FROM BorderCrossing
+                    JOIN CROSSES ON BorderCrossing.Date = CROSSES.CrossingDate AND BorderCrossing.Time = CROSSES.CrossingTime
+                    JOIN NonCitizen ON CROSSES.PassportID = NonCitizen.PassportID
+                    WHERE NonCitizen.City = %s;""", (textValue,)
+            elif selection == "COUNT(*)":
+                return f"""SELECT COUNT(*) AS Count
+                    FROM BorderCrossing
+                    JOIN CROSSES ON BorderCrossing.Date = CROSSES.CrossingDate AND BorderCrossing.Time = CROSSES.CrossingTime
+                    JOIN NonCitizen ON CROSSES.PassportID = NonCitizen.PassportID
                     WHERE NonCitizen.City = %s;""", (textValue,)
         elif ncCondition == "Province":
-            return f"""SELECT {selection} FROM BorderCrossing 
-                    JOIN NonCitizen ON BorderCrossing.NonCitizenID = NonCitizen.NonCitizenID
+            if selection == "*":
+                return f"""SELECT BorderCrossing.*, NonCitizen.Province
+                    FROM BorderCrossing
+                    JOIN CROSSES ON BorderCrossing.Date = CROSSES.CrossingDate AND BorderCrossing.Time = CROSSES.CrossingTime
+                    JOIN NonCitizen ON CROSSES.PassportID = NonCitizen.PassportID
+                    WHERE NonCitizen.Province = %s;""", (textValue,)
+            elif selection == "COUNT(*)":
+                return f"""SELECT COUNT(*) AS Count
+                    FROM BorderCrossing
+                    JOIN CROSSES ON BorderCrossing.Date = CROSSES.CrossingDate AND BorderCrossing.Time = CROSSES.CrossingTime
+                    JOIN NonCitizen ON CROSSES.PassportID = NonCitizen.PassportID
                     WHERE NonCitizen.Province = %s;""", (textValue,)
         elif ncCondition == "Country of Origin":
-            return f"""SELECT {selection} FROM BorderCrossing 
-                    JOIN NonCitizen ON BorderCrossing.NonCitizenID = NonCitizen.NonCitizenID
+            if selection == "*":
+                return f"""SELECT BorderCrossing.*, NonCitizen.CountryOfOrigin
+                    FROM BorderCrossing
+                    JOIN CROSSES ON BorderCrossing.Date = CROSSES.CrossingDate AND BorderCrossing.Time = CROSSES.CrossingTime
+                    JOIN NonCitizen ON CROSSES.PassportID = NonCitizen.PassportID
+                    WHERE NonCitizen.CountryOfOrigin = %s;""", (textValue,)
+            elif selection == "COUNT(*)":
+                return f"""SELECT COUNT(*) AS Count
+                    FROM BorderCrossing
+                    JOIN CROSSES ON BorderCrossing.Date = CROSSES.CrossingDate AND BorderCrossing.Time = CROSSES.CrossingTime
+                    JOIN NonCitizen ON CROSSES.PassportID = NonCitizen.PassportID
                     WHERE NonCitizen.CountryOfOrigin = %s;""", (textValue,)

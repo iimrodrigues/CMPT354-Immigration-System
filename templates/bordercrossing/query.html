@@ -49,43 +49,43 @@
             </div>
 
             <div class="row">
-            <!-- DATE FILTER -->
-            <div id="dateSection" class="hidden section">
-                <select name="dateCondition">
-                    <option>Before</option>
-                    <option>On</option>
-                    <option>After</option>
-                </select>
+                <!-- DATE FILTER -->
+                <div id="dateSection" class="hidden section">
+                    <select name="dateCondition">
+                        <option>Before</option>
+                        <option>On</option>
+                        <option>After</option>
+                    </select>
 
-                <input type="date" name="dateValue">
-            </div>
+                    <input type="date" name="dateValue">
+                </div>
 
-            <!-- TIME FILTER -->
-            <div id="timeSection" class="hidden section">
-                <select name="timeCondition">
-                    <option>Before</option>
-                    <option>On</option>
-                    <option>After</option>
-                </select>
+                <!-- TIME FILTER -->
+                <div id="timeSection" class="hidden section">
+                    <select name="timeCondition">
+                        <option>Before</option>
+                        <option>On</option>
+                        <option>After</option>
+                    </select>
 
-                <input type="time" name="timeValue">
-            </div>
+                    <input type="time" name="timeValue">
+                </div>
 
-            <!-- NON-CITIZEN FILTER -->
-            <div id="ncSection" class="hidden section" onchange="requestNCInput()">
-                <select name="ncCondition">
-                    <option>First Name</option>
-                    <option>Last Name</option>
-                    <option>City</option>
-                    <option>Province</option>
-                    <option>Country of Origin</option>
-                </select>
-            </div>
+                <!-- NON-CITIZEN FILTER -->
+                <div id="ncSection" class="hidden section" onchange="requestNCInput()">
+                    <select name="ncCondition">
+                        <option>First Name</option>
+                        <option>Last Name</option>
+                        <option>City</option>
+                        <option>Province</option>
+                        <option>Country of Origin</option>
+                    </select>
+                </div>
 
-            <!-- TEXT INPUT -->
-            <div id="textSection" class="hidden section">
-                <input type="text" name="textValue" placeholder="Enter text">
-            </div>
+                <!-- TEXT INPUT -->
+                <div id="textSection" class="hidden section">
+                    <input type="text" name="textValue" placeholder="Enter text">
+                </div>
 
             </div>
 
@@ -93,6 +93,35 @@
 
         </form>
 
+        <div class="table-container">
+            {% if results %}
+
+            <table class="result-table">
+
+                <thead>
+                    <tr>
+                        {% for key in results[0].keys() %}
+                        <th>{{ key }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for row in results %}
+                    <tr>
+                        {% for value in row.values() %}
+                        <td>{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+            {% else %}
+            <p>No data found matching your query.</p>
+
+            {% endif %}
+        </div>
     </div>
 
     <script>
@@ -127,15 +156,16 @@
 
         function requestInput() {
             const field = document.getElementById("fieldSelect").value;
+            const action = document.getElementById("actionSelect").value;
 
             document.getElementById("dateSection").classList.add("hidden");
             document.getElementById("timeSection").classList.add("hidden");
             document.getElementById("textSection").classList.add("hidden");
             document.getElementById("ncSection").classList.add("hidden");
 
-            if (field === "date") {
+            if (field === "date" && (action != "Max" && action != "Min")) {
                 document.getElementById("dateSection").classList.remove("hidden");
-            } else if (field === "time") {
+            } else if (field === "time" && (action != "Max" && action != "Min")) {
                 document.getElementById("timeSection").classList.remove("hidden");
             } else if (field === "city" || field === "province" || field === "postal") {
                 document.getElementById("textSection").classList.remove("hidden");
