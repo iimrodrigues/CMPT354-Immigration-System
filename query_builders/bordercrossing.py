@@ -30,6 +30,8 @@ def update_query(form):
 
     params = (value, date, time)
 
+    return query, params, None
+
 def bordercrossing_remove(form):
     date = form.get("date")
     time = form.get("time")
@@ -64,4 +66,3 @@ def bordercrossing_add(form):
             VALUES ('{date}', '{time + ":00"}', '{city}', '{province}', '{postal}', '{crossing}');
             COMMIT;
             """
-    return query, params, None
