@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Visa Update</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Visa Update</h2>
+
+        <form method="POST">
+
+            <div class="row">
+
+                <div style="display:flex; align-items:center; padding:0 10px;">
+                    <strong>Update Visa</strong>
+                </div>
+
+                <!-- Field to update -->
+                <div>
+                    <select name="field" id="fieldSelect" onchange="onFieldChange()">
+                        <option value="none">Select Field</option>
+                        <option value="IssueDate">Issue Date</option>
+                        <option value="ExpiryDate">Expiry Date</option>
+                        <option value="StayStatus">Stay Status</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- WHERE: identify which visa -->
+            <div class="row">
+                <div><strong>Where:</strong></div>
+
+                <div>
+                    <label>Passport ID:</label>
+                    <input type="text" name="passportID">
+                </div>
+
+                <div>
+                    <label>Visa ID:</label>
+                    <input type="text" name="visaID">
+                </div>
+            </div>
+
+            <!-- Update To -->
+            <div class="row">
+                
+                <div style="display:flex; align-items:center; padding:0 10px;">
+                    <strong>Update To:</strong>
+                </div>
+
+                <div id="dateSection" class="hidden">
+                    <input type="date" name="dateValue">
+                </div>
+
+                <div id="textSection" class="hidden">
+                    <input type="text" name="textValue" placeholder="Enter status">
+                </div>
+            </div>
+
+            <button type="submit">Update</button>
+
+        </form>
+
+        {% if message %}
+        <div class="row">
+            <p><strong>{{ message }}</strong></p>
+        </div>
+        {% endif %}
+
+        {% if results %}
+        <div class="row">
+            <table>
+                <tr>
+                    {% for col in results[0].keys() %}
+                    <th>{{ col }}</th>
+                    {% endfor %}
+                </tr>
+                {% for row in results %}
+                <tr>
+                    {% for val in row.values() %}
+                    <td>{{ val }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% endif %}
+        
+    </div>
+
+    <script>
+        function onFieldChange() {
+        const field = document.getElementById("fieldSelect").value;
+
+        document.getElementById("dateSection").classList.add("hidden");
+        document.getElementById("textSection").classList.add("hidden");
+
+        if (field === "IssueDate" || field === "ExpiryDate") {
+            document.getElementById("dateSection").classList.remove("hidden");
+        }
+
+        if (field === "StayStatus") {
+            document.getElementById("textSection").classList.remove("hidden");
+        }
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Border Crossing Update</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+<div class="container">
+
+    <h2>Border Crossing Update</h2>
+
+    <form method="POST">
+
+        <div class="row">
+            <div><strong>Update Border Crossing</strong></div>
+
+            <div>
+                <select name="field" id="fieldSelect" onchange="onFieldChange()">
+                    <option value="none">Select Field</option>
+                    <option value="City">City</option>
+                    <option value="Province">Province</option>
+                    <option value="PostalCode">Postal Code</option>
+                    <option value="EntryOrExit">Entry/Exit</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div><strong>Where:</strong></div>
+
+            <div>
+                <label>Date:</label>
+                <input type="date" name="date">
+            </div>
+
+            <div>
+                <label>Time:</label>
+                <input type="time" name="time">
+            </div>
+        </div>
+
+        <div class="row">
+            <div><strong>Update To:</strong></div>
+
+            <div id="textSection" class="hidden">
+                <input type="text" name="value">
+            </div>
+        </div>
+
+        <button type="submit">Update</button>
+
+    </form>
+
+</div>
+
+<script>
+function onFieldChange() {
+    document.getElementById("textSection").classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>

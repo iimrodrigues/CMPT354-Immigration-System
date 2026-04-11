@@ -71,6 +71,24 @@ def get_application_query(form):
                             GROUP BY Application.ApplicationID
                             HAVING COUNT(SupportingDocuments.ApplicationID) > %s
                         ) AS Subquery;""", (countDocs,)
+            
+def update_query(form):
+    application_id = form.get("applicationID")
+    status_value = form.get("statusValue")
+
+    if not application_id or not status_value:
+        return None, None, "Please fill in all fields."
+
+    query = """
+        UPDATE Application
+        SET Status = %s
+        WHERE ApplicationID = %s
+    """
+
+    params = (status_value, application_id)
+
+    return query, params, None
+  
 def application_remove(form):
     applicationID = form.get("applicationID")  
 

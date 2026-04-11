@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Application Update</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+<div class="container">
+
+    <h2>Application Update</h2>
+
+    <form method="POST">
+
+        <div class="row">
+            <div><strong>Update Application</strong></div>
+
+            <div>
+                <select name="field">
+                    <option value="Status">Status</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div><strong>Where:</strong></div>
+
+            <div>
+                <label>Application ID:</label>
+                <input type="number" name="applicationID">
+            </div>
+        </div>
+
+        <div class="row">
+            <div><strong>Update To:</strong></div>
+
+            <div>
+                <input type="text" name="statusValue" placeholder="e.g. Approved">
+            </div>
+        </div>
+
+        <button type="submit">Update</button>
+
+    </form>
+
+</div>
+</body>
+</html>
