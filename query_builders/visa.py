@@ -53,13 +53,13 @@ def get_visa_query(form):
         return f"SELECT {selection} FROM Visa WHERE Visa.VisaID = '{id}';"
 
 def visa_remove(form):
-    id = form.get("visaID")
+    visaID = form.get("visaID")
 
-    if(not id): return "--"
+    if(len(visaID) < 8): return None
 
     return f"""
             START TRANSACTION;         
-            DELETE from Visa WHERE VisaID = '{id}';
+            DELETE from Visa WHERE VisaID = '{visaID}';
             COMMIT;
             """
 
@@ -71,11 +71,11 @@ def visa_add(form):
     expiryDate = form.get("expiryDate")
     stayStatus = form.get("stayStatus")
 
-    if(not passportID): return "--"
-    if(not visaID): return "--"
-    if(not applicationID): return "--"
-    if(not issueDate): return "--"
-    if(not expiryDate): return "--"
+    if(len(passportID) < 8): return None
+    if(len(visaID) < 8): return None
+    if(not applicationID): return None
+    if(not issueDate): return None
+    if(not expiryDate): return None
 
     return f"""
             START TRANSACTION;

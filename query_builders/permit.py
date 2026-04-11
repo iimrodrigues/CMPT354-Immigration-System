@@ -53,13 +53,13 @@ def get_permit_query(form):
         return f"SELECT {selection} FROM Permit WHERE Permit.PermitID = '{id}';"
 
 def permit_remove(form):
-    id = form.get("permitID")
+    permitID = form.get("permitID")
 
-    if(not id): return "--"
+    if(len(permitID) < 10): return None
 
     return f"""
             START TRANSACTION;         
-            DELETE from Permit WHERE PermitID = '{id}';
+            DELETE from Permit WHERE PermitID = '{permitID}';
             COMMIT;
             """
 
@@ -70,11 +70,11 @@ def permit_add(form):
     issueDate = form.get("issueDate")
     expiryDate = form.get("expiryDate")
 
-    if(not passportID): return "--"
-    if(not permitID): return "--"
-    if(not applicationID): return "--" 
-    if(not issueDate): return "--"
-    if(not expiryDate): return "--"
+    if(len(passportID) < 8): return None
+    if(len(permitID) < 10): return None
+    if(not applicationID): return None 
+    if(not issueDate): return None
+    if(not expiryDate): return None
 
     return f"""
             START TRANSACTION;

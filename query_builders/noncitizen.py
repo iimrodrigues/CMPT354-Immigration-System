@@ -1,7 +1,7 @@
 def noncitizen_remove(form):
 
     passportID = form.get("passportID")
-    if(not passportID): return "--"
+    if(len(passportID) < 8): return None
     
     return f"""
             START TRANSACTION;
@@ -22,19 +22,19 @@ def noncitizen_add(form):
     postal = form.get("postal")
     criminalRecord = form.get("criminalRecord")
 
-    if(not passportID): return "--"
-    if(not firstName): return "--"
-    if(not lastName): return "--"
-    if(not dob): return "--"
-    if(not country): return "--"
-    if(not street): return "--"
-    if(not city): return "--"
-    if(province == "- Select Province -"): return "--"
-    if(len(postal) < 7): return "--"
+    if(len(passportID) < 8): return None
+    if(not firstName): return None
+    if(not lastName): return None
+    if(not dob): return None
+    if(not country): return None
+    if(not street): return None
+    if(not city): return None
+    if(province == "- Select Province -"): return None
+    if(len(postal) < 7): return None
 
     if(criminalRecord == "Yes"): criminalRecord = "True"
     elif(criminalRecord == "No"): criminalRecord = "False"
-    else: return "--"
+    else: return None
 
     return f"""
             START TRANSACTION;

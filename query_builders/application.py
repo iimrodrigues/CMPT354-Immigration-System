@@ -1,7 +1,7 @@
 def application_remove(form):
     applicationID = form.get("applicationID")  
 
-    if(not applicationID): return "--" 
+    if(not applicationID): return None 
 
     return f"""
             START TRANSACTION;
@@ -16,11 +16,11 @@ def application_add(form):
     documentNumber = form.get("document")
     status = form.get("status")
 
-    if(not applicationID): return "--"
-    if(not passportID): return "--"
-    if(not submissionDate): return "--"
-    if(not documentNumber): return "--"
-    if(status == "- Select Application Status -"): return "--"
+    if(not applicationID): return None
+    if(len(passportID) < 8): return None
+    if(not submissionDate): return None
+    if(not documentNumber): return None
+    if(status == "- Select Application Status -"): return None
 
     return f"""
             START TRANSACTION;

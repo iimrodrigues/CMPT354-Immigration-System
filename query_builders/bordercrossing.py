@@ -2,8 +2,8 @@ def bordercrossing_remove(form):
     date = form.get("date")
     time = form.get("time")
 
-    if(not date): return "--"
-    if(not time): return "--"
+    if(not date): return None
+    if(not time): return None
 
     return f"""
             START TRANSACTION;
@@ -20,12 +20,12 @@ def bordercrossing_add(form):
     postal = form.get("postal")
     crossing = form.get("crossing")
 
-    if(not passportID): return "--"
-    if(not date): return "--"
-    if(not time): return "--"
-    if(not city): return "--"
-    if(province == "- Select Province -"): return "--"
-    if(len(postal) < 7): return "--"
+    if(len(passportID) < 8): return None
+    if(not date): return None
+    if(not time): return None
+    if(not city): return None
+    if(province == "- Select Province -"): return None
+    if(len(postal) < 7): return None
 
     return f"""
             START TRANSACTION;
