@@ -13,6 +13,7 @@ def bordercrossing_remove(form):
             """
 
 def bordercrossing_add(form):
+    passportID = form.get("passportID")
     date = form.get("date")
     time = form.get("time")
     city = form.get("city")
@@ -20,6 +21,7 @@ def bordercrossing_add(form):
     postal = form.get("postal")
     crossing = form.get("crossing")
 
+    if(not passportID): return "--"
     if(not date): return "--"
     if(not time): return "--"
     if(not city): return "--"
@@ -30,5 +32,7 @@ def bordercrossing_add(form):
             START TRANSACTION;
             INSERT INTO BorderCrossing (Date, Time, City, Province, PostalCode, EntryOrExit)
             VALUES ('{date}', '{time + ":00"}', '{city}', '{province}', '{postal}', '{crossing}');
+            INSERT INTO CROSSES (CrossingDate, CrossingTime, PassportID)
+            VALUES ('{date}', '{time + ":00"}', '{passportID}');
             COMMIT;
             """
