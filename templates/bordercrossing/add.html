@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Border Crossing Add</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Border Crossing Add</h2>
+
+        <form method="POST">
+
+            <div class="row">
+            <section>
+
+                <!-- Passport ID INPUT -->
+                <label for="passportID">Passport ID</label>
+                <input type="text" id="passportID" name="passportID" placeholder="Existing 8-character Passport ID" maxlength="8">
+
+                <!-- Date INPUT -->
+                <label for="date">Crossing Date</label>
+                <input type="date" id="date" name="date">
+
+                <!-- Time INPUT -->
+                <label for="time">Crossing Time</label>
+                <input type="time" id="time" name="time">
+            
+                <!-- City INPUT -->
+                <label for="city">City</label>
+                <input type="text" id="city" name="city" placeholder="City" maxlength="25">
+                
+                <!-- Province INPUT -->
+                <label for="province">Province</label>
+                <select id="province" name="province">
+                    <option>- Select Province -</option>
+                    <option>British Colombia</option>
+                    <option>Alberta</option>
+                    <option>Saskatchewan</option>
+                    <option>Manitoba</option>
+                    <option>Ontario</option>
+                    <option>Quebec</option>
+                    <option>New Brunswick</option>
+                    <option>Nova Scotia</option>
+                    <option>Prince Edward Island</option>
+                    <option>Newfoundland and Labrador</option>
+                </select>
+               
+                <!-- Postal Code input -->
+                <label for="postal">Postal Code</label>
+                <input type="text" id="postal" name="postal" placeholder="0X0 X0X", maxlength="7">
+
+                <!-- Entry Or Exit Select -->
+                <label for="crossing">Crossing Type</label>
+                <select id="crossing" name="crossing">
+                    <option>- Select Crossing Type -</option>
+                    <option>Entry</option>
+                    <option>Exit</option>
+                </select>
+
+            </section>
+            </div>
+
+            <button type="submit">Add</button>
+
+        </form>
+
+        <br></br>
+        <button onclick="window.location.href='..'">Back to Home Page</button>
+    </div>
+</body>
+
+</html>

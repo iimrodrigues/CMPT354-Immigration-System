@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Application Query</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Application Query</h2>
+
+    <form method="POST">
+
+        <div class="row">
+
+            <div>
+                <select name="action">
+                    <option>Find</option>
+                    <option>Count</option>
+                </select>
+            </div>
+
+                <div style="display:flex; align-items:center; padding:0 10px;">
+                    <strong>Application</strong>
+                </div>
+
+            <!-- Application Fields -->
+            <div id="applicationFields" name="fields" onchange="requestInput()">
+                <select id="appFieldSelect" name="appField">
+                    <option value="none">N/A</option>
+                    <option value="id">ID</option>
+                    <option value="status">Status</option>
+                    <option value="countDocs">Number of Supporting Documents</option>
+                </select>
+            </div>
+
+        </div>
+
+        <!-- ID INPUT -->
+            <div id="idSection" class="hidden section">
+                <input type="text" id="appID" name="appID" placeholder="Enter numerical ID" maxlength="12">
+            </div>
+
+        <!-- Status INPUT -->
+            <div id="statusSection" class="hidden section">
+                <select id="appStatus" name="appStatus">
+                    <option value="pending">Pending</option>
+                    <option value="approved">Approved</option>
+                    <option value="rejected">Rejected</option>
+                    <option value="withdrawn">Withdrawn</option>
+                </select>
+            </div>
+
+        <!-- Number of Supporting Documents INPUT -->
+            <div id="countDocsSection" class="hidden section">
+                <select id="countDocsCondition" name="countDocsCondition">
+                    <option>Less than</option>
+                    <option>Equal to</option>
+                    <option>Greater than</option>
+                </select>
+
+                <input type="number" id="countDocsValue" name="countDocsValue" placeholder="Enter a number" min="0">
+            </div>
+        <button type="submit">Search</button>
+
+    </form>
+    
+    <br></br>
+    <button onclick="window.location.href='..'">Back to Home Page</button>
+</div>
+
+<script>
+    function requestInput() {
+        const appField = document.getElementById("appFieldSelect").value;
+        const idSection = document.getElementById("idSection");
+        const statusSection = document.getElementById("statusSection");
+        const countDocsSection = document.getElementById("countDocsSection");
+
+        // reset visibility
+        resetAllConditional();
+
+        // show ID input
+        if (appField === "id") {
+            idSection.classList.remove("hidden");
+        } else if (appField === "status") {
+            statusSection.classList.remove("hidden");
+        } else if (appField === "countDocs") {
+            countDocsSection.classList.remove("hidden");
+        }
+    }
+
+    function resetAllConditional() {
+        // hide all sections
+        idSection.classList.add("hidden");
+        statusSection.classList.add("hidden");
+        countDocsSection.classList.add("hidden");
+
+        // reset inputs inside them
+        document.querySelectorAll("#idSection input")
+            .forEach(el => el.value = "");
+        document.querySelectorAll("#statusSection select")
+            .forEach(el => el.selectedIndex = 0);
+        document.querySelectorAll("#countDocsSection input, #countDocsSection select")
+            .forEach(el => el.value = "");
+    }
+</script>
+
+</body>
+</html>

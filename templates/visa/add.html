@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Visa Add</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Visa Add</h2>
+
+        <form method="POST">
+
+            <div class="row">
+            <section>
+
+                <!-- Passport ID INPUT -->
+                <label for="passportID">Passport ID</label>
+                <input type="text" id="passportID" name="passportID" placeholder="Existing 8-character Passport ID" maxlength="8">
+
+                <!-- Visa ID INPUT -->
+                <label for="visaId">Visa ID</label>
+                <input type="text" id="visaID" name="visaID" placeholder="8-character Visa ID" maxlength="8">
+            
+                <!-- Application ID INPUT -->
+                <label for="applicationID">Application ID</label>
+                <input type="number" id="applicationID" name="applicationID" placeholder="Existing Application ID Number">
+                
+                <!-- issue date input -->
+                <label for="issueDate">Issue Date</label>
+                <input type="date" id="issueDate" name="issueDate">
+
+                <!-- expiry date input -->
+                <label for="expiryDate">Expiry Date</label>
+                <input type="date" id="expiryDate" name="expiryDate">
+
+                <!-- Stay Status TYPE FILTER -->
+                <label for="stayStatus">Stay Status</label>
+                <select id="statyStatus" name="stayStatus">
+                    <option>Valid</option>
+                    <option>Revoked</option>
+                    <option>Expiried</option>
+                </select>
+
+                <!-- Visa TYPE FILTER -->
+                <label for="visaType">Visa Type</label>
+                <select id="visaType" name="visaType">
+                    <option>All</option>
+                    <option>Transit Visa</option>
+                    <option>Visitor Visa</option>
+                </select>
+
+            </section>
+            </div>
+
+            <button type="submit">Add</button>
+
+        </form>
+
+        <br></br>
+        <button onclick="window.location.href='..'">Back to Home Page</button>
+
+    </div>
+
+</body>
+
+</html>

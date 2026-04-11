@@ -85,7 +85,7 @@ VALUES
 ('IJ567890', 'VJ012345');
 
 INSERT INTO Permit
-(PassportID, PermitID, StartDate, ExpiryDate, ApplicationID)
+(PassportID, PermitID, IssueDate, ExpiryDate, ApplicationID)
 VALUES
 ('AB123456', 'S123456789', '2015-06-01', '2019-06-01', 1),
 ('CD234567', 'S234567890', '2016-09-01', '2020-09-01', 2),
@@ -115,3 +115,27 @@ VALUES
 ('EF345678', 'W890123456'),
 ('GH456789', 'W901234567'),
 ('IJ567890', 'W012345678');
+
+DELIMITER $$
+
+CREATE TRIGGER add_transit_and_visitor_visa
+AFTER INSERT ON Visa
+FOR EACH ROW
+BEGIN
+    INSERT INTO TransitVisa (PassportID, VisaID)
+    VALUES (NEW.PassportID, NEW.VisaID);
+    INSERT INTO VisitorVisa (PassportID, VisaID)
+    VALUES (NEW.PassportID, NEW.VisaID);
+END$$
+
+CREATE TRIGGER add_work_and_study_permit
+AFTER INSERT ON Permit
+FOR EACH ROW
+BEGIN
+    INSERT INTO WorkPermit (PassportID, PermitID)
+    VALUES (NEW.PassportID, NEW.PermitID);
+    INSERT INTO StudyPermit (PassportID, PermitID)
+    VALUES (NEW.PassportID, NEW.PermitID);
+END$$
+
+DELIMITER ;

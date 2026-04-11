@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Non-Citizen Remove</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Non-Citizen Remove</h2>
+
+        <form method="POST">
+
+            <div class="row">
+            <section>
+
+                <!-- Passport ID INPUT -->
+                <label for="passportId">Passport ID</label>
+                <input type="text" id="passportID" name="passportID" placeholder="8-character Passport ID" maxlength="8">
+
+            </section>
+            </div>
+
+            <button type="submit">Remove</button>
+
+        </form>
+
+    <br></br>
+    <button onclick="window.location.href='..'">Back to Home Page</button>
+
+    </div>
+
+</body>
+
+</html>
