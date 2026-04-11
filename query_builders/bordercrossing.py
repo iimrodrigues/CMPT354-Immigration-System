@@ -1,5 +1,16 @@
 def bordercrossing_remove(form):
-    return "--"
+    date = form.get("date")
+    time = form.get("time")
+
+    if(not date): return "--"
+    if(not time): return "--"
+
+    return f"""
+            START TRANSACTION;
+            DELETE FROM CROSSES WHERE CrossingDate = '{date}' AND CrossingTime = '{time + ":00"}';
+            DELETE FROM BorderCrossing WHERE Date = '{date}' AND Time = '{time + ":00"}';
+            COMMIT;
+            """
 
 def bordercrossing_add(form):
     date = form.get("date")
